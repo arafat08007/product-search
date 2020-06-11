@@ -113,6 +113,7 @@ def signIn(request):
     # data = { "product_name":"John", "store_id":30, "city":"New York"}
     try:
         user = request.session['uid']
+        print(user)
         return redirect('mappoint')
     except:
         return render(request, 'project/signin.html', {})
@@ -121,12 +122,15 @@ def signIn(request):
 def authCheck(request):
     email = request.POST.get('email', '')
     password = request.POST.get('password','')
+    print(email, password)
     try:
         user = firebase_auth.sign_in_with_email_and_password(email, password)
+        print(user)
     except:
         message = 'Invalid Credentials'
         return render(request, 'project/signin.html', {'message': message})
     session_id = user['idToken']
+    print(user)
     request.session['uid'] = str(session_id)
     return redirect('mappoint')
 
@@ -146,9 +150,11 @@ def signup_request(request):
     password = request.POST.get('password', '')
     confirm_password = request.POST.get('confirm_password', '')
     status = request.POST.get('status', '')
+
     if not re.search(regex, email):
         message = "Invalid email"
         return render(request, 'project/signup.html', {"message": message})
+
     if status == '1':
         if store_name is "":
             message = "Enter store name"
@@ -157,27 +163,28 @@ def signup_request(request):
     if len(password) < 6:
         message = "Password should be at least 6 characters"
         return render(request, 'project/signup.html', {"message": message})
+
     if password != confirm_password:
         message = "Password doesn't match"
         return render(request, 'project/signup.html', {"message": message})
+
     try:
         user = firebase_auth.create_user_with_email_and_password(email, password)
     except HTTPError as e:
         message = "Email exists"
         return render(request, 'project/signup.html', {"message": message})
+
     uid = user['localId']
+
     if status == "1":
+        print(status, store_name)
         data = {
             "store_name": store_name,
             "lat": user_lat_location,
             "long": user_long_location,
             "status": "business_user"
         }
-    else:
-        data = {
-            "status": "user"
-        }
-    db.child("users").child(uid).child("details").set(data)
+        db.child(uid).child("user_info").set(data)
     return render(request, 'project/signin.html', {})
 
 
@@ -190,6 +197,17 @@ def business_list(request):
 
 
 def add_product(request):
+    return render(request, 'project/addproduct.html', {})
+
+
+def add_product_firebase(request):
+    name = request.POST.get('name', '')
+    price = request.POST.get('price', '')
+    description = request.POST.get('description', '')
+    print(name, price, description)
+    uid = request.session.get('uid')
+    user_data = db.child(uid).get()
+    print(user_data)
     return render(request, 'project/addproduct.html', {})
 
 

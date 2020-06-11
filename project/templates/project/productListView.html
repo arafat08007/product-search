@@ -8,7 +8,8 @@
   <title>Google Maps - pygmaps </title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'css/project.css' %}">
+          <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/project.css' %}">
 </head>
 
 <body onload="initialize()">
@@ -17,12 +18,12 @@
 
       <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <a href="#">Home</a>
-            <a href="{% url 'businesslist' %}">Find Business</a>
-        <a href="{% url 'productlist' %}">Find Products</a>
-            <a href="{% url 'updateinfo' %}">Update Store Info</a>
-            <a href="{% url 'addproduct' %}">Add Product</a>
-            <a href="{% url 'logout' %}">Logout</a>
+            <a href="#"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
+            <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
+            <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>
+            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Update Store Info</a>
+            <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
+            <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
 <!--      <div id="main">-->
 <!--        <button class="openbtn" onclick="openNav()">☰</button>-->
@@ -58,94 +59,106 @@
       <div class="relative" style="max-height:31rem; overflow-y: scroll; overflow-x: hidden">
 
         <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
+          <a href="{% url 'productdetails' %}" style="text-decoration: none;">
+              <div class="row">
             <div class="col-4">
               <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
             </div>
             <div class="col-8">
               <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
+                <p style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</p>
                 <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
                   repreh, it have enderit.</p>
                 <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
               </div>
             </div>
           </div>
+          </a>
         </div>
         <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
+          <a href="{% url 'productdetails' %}" style="text-decoration: none;">
+              <div class="row">
             <div class="col-4">
               <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
             </div>
             <div class="col-8">
               <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
+                <p style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</p>
                 <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
                   repreh, it have enderit.</p>
                 <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
               </div>
             </div>
           </div>
+          </a>
         </div>
        <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
+          <a href="{% url 'productdetails' %}" style="text-decoration: none;">
+              <div class="row">
             <div class="col-4">
               <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
             </div>
             <div class="col-8">
               <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
+                <p style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</p>
                 <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
                   repreh, it have enderit.</p>
                 <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
               </div>
             </div>
           </div>
+          </a>
         </div>
         <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
+          <a href="{% url 'productdetails' %}" style="text-decoration: none;">
+              <div class="row">
             <div class="col-4">
               <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
             </div>
             <div class="col-8">
               <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
+                <p style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</p>
                 <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
                   repreh, it have enderit.</p>
                 <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
               </div>
             </div>
           </div>
+          </a>
         </div>
         <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
+          <a href="{% url 'productdetails' %}" style="text-decoration: none;">
+              <div class="row">
             <div class="col-4">
               <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
             </div>
             <div class="col-8">
               <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
+                <p style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</p>
                 <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
                   repreh, it have enderit.</p>
                 <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
               </div>
             </div>
           </div>
+          </a>
         </div>
        <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
+          <a href="{% url 'productdetails' %}" style="text-decoration: none;">
+              <div class="row">
             <div class="col-4">
               <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
             </div>
             <div class="col-8">
               <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
+                <p style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</p>
                 <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
                   repreh, it have enderit.</p>
                 <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
               </div>
             </div>
           </div>
+          </a>
         </div>
         <div  class="btn-group capsule-button" role="group" aria-label="Basic example">
                 <button

@@ -15,9 +15,9 @@
 
 <body>
     <div class="content" >
-    <div class="card" style="color:#828282;">
+    <div class="card" style="color:black;">
         <article class="card-body" style="width: 20rem; height: 36rem;">
-            <a style="color:#4d4d4d;" href="{% url 'login' %}" class="float-left ">Login</a>
+            <a style="color:black;" href="{% url 'login' %}" class="float-left ">Login</a>
             <div><p class="signup">Sign Up</p></div>
             <div class="relative" style="margin: 40px 0;">
                 <span class="signup-span">and discover millions of products</span>
@@ -27,24 +27,19 @@
                 <form name="authcheck" method="POST" action="{% url 'signuprequest' %}">
                 {% csrf_token %}
                 <div  class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" class="form-control sign-input" type="email">
+                    <input id="email" name="email" placeholder="Email Address" class="form-control sign-input" type="email">
                 </div>
                 <div  class="form-group">
-                    <label for="phone">Phone</label>
-                    <input id="phone" name="phone" class="form-control sign-input" type="text">
+                    <input id="phone" name="phone" placeholder="Phone Number" class="form-control sign-input" type="text">
                 </div>
                 <div  class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" name="password" class="form-control sign-input" type="password">
+                    <input id="password" name="password" placeholder="Password" class="form-control sign-input" type="password">
                 </div>
                 <div  class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input id="confirm_password" name="confirm_password" class="form-control sign-input" type="password">
+                    <input id="confirm_password" name="confirm_password" placeholder="Confirm Password" class="form-control sign-input" type="password">
                 </div>
                  <div id="store_div" class="form-group" style="display:None;">
-                    <label for="store">Store or Business name</label>
-                    <input id="store" name="store" class="form-control sign-input" type="text">
+                    <input id="store_name" name="store_name" placeholder="Store or Business name" class="form-control sign-input" type="text">
                 </div>
 
                 <div class="form-check form-check-inline" style="margin-bottom: 1rem; margin-top: 10px;">
@@ -52,8 +47,17 @@
                   <label class="form-check-label" for="check">Check for business account</label>
                 </div>
 
-                <div class="form-group" style="text-align:center;">
-                    <button style="padding: 10px 80px;border-radius: 11px;" type="submit" class="btn btn-dark"> Register </button>
+                    <div>
+                <div style="text-align:left; font-size: 22px;">
+                    <a style="padding-right:20px"><i style="color:black" class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                    <a><i style="color:black" class="fa fa-google" aria-hidden="true"></i></a>
+                </div>
+            </div>
+
+                <div class="form-group" style="text-align:right;">
+                    <button style="padding: 15px 30px;border-radius: 5px;" type="submit" class="btn btn-danger">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </button>
                 </div>
                 <p style="text-align:center; color:red;">
                     {% if message %}
@@ -61,14 +65,6 @@
                     {% endif %}
                 </p>
             </form>
-            <div style="text-align: center;"><p style="font-size:20px; border-bottom: 1px solid #d0c9c9; padding-bottom: 8px;">or</p></div>
-            <div>
-                <div style="text-align:center; font-size: 50px;">
-                    <a style="padding-right:20px"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-                    <a><i class="fa fa-google" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <div style="text-align:center;margin-top: 10px;"><a href="">Already have an account?</a></div>
             </div>
         </article>
     </div>

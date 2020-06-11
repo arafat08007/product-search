@@ -8,7 +8,8 @@
   <title>Google Maps - pygmaps </title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'css/project.css' %}">
+          <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/project.css' %}">
 </head>
 
 <body onload="initialize()">
@@ -17,12 +18,12 @@
     <div class="card" style="width: 20rem;">
         <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <a href="#">Home</a>
-            <a href="{% url 'businesslist' %}">Find Business</a>
-            <a href="{% url 'productlist' %}">Find Products</a>
-            <a href="{% url 'updateinfo' %}">Update Store Info</a>
-            <a href="{% url 'addproduct' %}">Add Product</a>
-            <a href="{% url 'logout' %}">Logout</a>
+            <a href="#"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
+            <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
+            <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>
+            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Update Store Info</a>
+            <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
+            <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
         <div class="input-group mb-3 white-nav">
             <div class="input-group-prepend">

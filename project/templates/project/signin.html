@@ -15,26 +15,30 @@
 
 <body>
     <div class="content" >
-    <div class="card" style="color:#828282; max-height:36rem; overflow-y: scroll; overflow-x: hidden">
+    <div class="card" style="color:black; max-height:36rem; overflow-y: scroll; overflow-x: hidden">
         <article class="card-body" style="width: 20rem; height: 36rem;">
             <p class="login float-left">Login</p>
-            <div style="margin-left: 40%;"><a style="color:#4d4d4d;" href="{% url 'signup' %}">Sign up</a></div>
+            <div style="margin-left: 40%;"><a style="color:black;" href="{% url 'signup' %}">Sign up</a></div>
             <div class="relative" style="margin: 40px 0;">
                 <span class="signup-span">your greeting text</span>
                 <h2 style="font-weight:900;" class="card-title mb-4 mt-1">Welcome !</h2>
             </div>
-            <form name="authcheck" method="POST" action="{% url 'mappoint' %}">
+            <form name="authcheck" method="POST" action="{% url 'authcheck' %}">
                 {% csrf_token %}
                 <div  class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" class="form-control sign-input" type="email">
+                    <input id="email" name="email" placeholder="Email" class="form-control sign-input" type="email">
                 </div>
                 <div  class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" name="password" class="form-control sign-input" type="password">
+                    <input id="password" placeholder="Password" name="password" class="form-control sign-input" type="password">
                 </div>
-                <div class="form-group" style="text-align:center;">
-                    <button style="padding: 10px 80px;border-radius: 11px;" type="submit" class="btn btn-dark"> Log in </button>
+                <div style="text-align:left; font-size: 22px;">
+                    <a style="padding-right:20px"><i style="color:black" class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                    <a><i style="color:black" class="fa fa-google" aria-hidden="true"></i></a>
+                </div>
+                <div class="form-group" style="text-align:right;">
+                    <button style="padding: 15px 30px;border-radius: 5px;" type="submit" class="btn btn-warning">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </button>
                 </div>
                 <p style="text-align:center; color:red;">
                     {% if message %}
@@ -42,14 +46,7 @@
                     {% endif %}
                 </p>
             </form>
-            <div style="text-align: center;"><p style="font-size:20px; border-bottom: 1px solid #d0c9c9; padding-bottom: 8px;">or</p></div>
-            <div>
-                <div style="text-align:center; font-size: 50px;">
-                    <a style="padding-right:20px"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-                    <a><i class="fa fa-google" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <div style="text-align:center;margin-top: 10px;"><a href="">Already have an account?</a></div>
+
         </article>
 
     </div>

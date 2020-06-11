@@ -15,6 +15,7 @@ urlpatterns = [
     path('businesslist', views.business_list, name='businesslist'),
     path('businessmap', views.business_map, name='businessmap'),
     path('addproduct', views.add_product, name='addproduct'),
+    path('addproductfirebase', views.add_product_firebase, name='addproductfirebase'),
     path('updateinfo', views.update_info, name='updateinfo'),
     path('storedetails', views.store_details, name='storedetails'),
     path('dashboard', views.dashboard, name='dashboard'),
