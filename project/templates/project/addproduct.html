@@ -1,0 +1,88 @@
+{% load static %}
+
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps - pygmaps </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/project.css' %}">
+
+</head>
+
+<body>
+    <div class="content" style="color:#828282; height:37rem; width: 20rem;">
+    <div class="card" >
+        <span onclick="goBack()"><i style="padding: 5px 0px 0px 10px; font-size: 25px; font-weight: bold;" class="fa fa-angle-left" aria-hidden="true"></i></span>
+        <article class="card-body" style=" ">
+            <div class="relative" style="margin: 0px 0;">
+                <span class="signup-span">your product information</span>
+                <h2 style="font-weight:900;" class="card-title mb-4 mt-1">Add Product</h2>
+            </div>
+        </article>
+    </div>
+         <div style="margin: 0px -5px; background:#F2F2F2; max-height:28rem; overflow-y: scroll; overflow-x: hidden">
+             <h6 style="padding: 15px 15px 0px 15px;font-weight: 501; margin-left: 23px;">Product information</h6>
+        <form style="padding: 1px 35px;" name="authcheck" method="POST" action="{% url 'signuprequest' %}">
+                {% csrf_token %}
+                <div  class="form-group">
+                    <input name="store_name" class="form-control sign-input" placeholder="Product name" type="text">
+                </div>
+                <div  class="form-group">
+                    <input name="price" class="form-control sign-input" placeholder="Product Price" type="text">
+                </div>
+                <div class="form-group">
+                    <input name="description" class="form-control sign-input" placeholder="Product Description" type="text">
+                </div>
+
+                <div class="form-group">
+                    <textarea style="border-radius: 10px;border: 1px solid #dbd9d9;padding: 15px;" id="w3review" name="description" placeholder="Product Description"
+                               rows=5 id="description"></textarea>
+                </div>
+
+                <div class="upload-btn-wrapper">
+                  <button class="btn-upload">Product Image</button>
+                  <input type="file" name="myfile" />
+                </div>
+
+                <div class="form-group" style="text-align:center; margin-top: 15px;">
+                    <button style="padding: 10px 80px;border-radius: 11px;" type="submit" class="btn btn-dark"> Create </button>
+                </div>
+                <p style="text-align:center; color:red;">
+                    {% if message %}
+                    {{ message }}
+                    {% endif %}
+                </p>
+            </form>
+         </div>
+    </div>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+    function goBack() {
+  window.history.back();
+}
+
+          function displayStore () {
+          var checkbox = document.getElementById("check").checked;
+          console.log(checkbox);
+          if (checkbox) {
+          document.getElementById("store_div").style.display = "inline";
+          }
+          else {
+          document.getElementById("store_div").style.display = "None";
+          }
+          }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+var latitude_list = {{ lat_location_list }};
+var longitude_list = {{ long_location_list }};
+for (i = 0; i < latitude_list.length; i++) {
+    var markar = new google.maps.Marker({
+        position: new google.maps.LatLng(latitude_list[i], longitude_list[i]),
+        map: map
+    });
+}

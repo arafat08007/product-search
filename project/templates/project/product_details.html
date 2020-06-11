@@ -1,0 +1,67 @@
+{% load static %}
+
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps - pygmaps </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/project.css' %}">
+</head>
+
+<body onload="initialize()">
+  <div class="content" style="height:37rem">
+  <div class="card" style="width: 20rem" >
+      <a onclick="goBack()" style="padding: 5px 0px 0px 10px; cursor: pointer;color:#828282;text-decoration: underline;"> <span onclick="goBack()"><i style="font-size: 25px; font-weight: bold;" class="fa fa-angle-left" aria-hidden="true"></i></span>
+</a>
+      <div class="product_img relative">
+              <img class="card-img-top" style="width:175px; height:175px" src="{% static 'images/demo.jpg' %}" alt="Card image cap">
+      </div>
+  <div class="card-body">
+      <div class="row product_title">
+          <div class="float-sm-left" style="width: 50%"><h6 style="font-weight:501;">Coles Reduced fat lite milk</h6></div>
+          <div class="float-sm-right" style="width: 50%; text-align:right;"><h6 style="font-weight:501;">$ 3.59</h6></div>
+      </div>
+      <div><p class="store">STORE</p></div>
+      <div class="row store_details">
+          <div class="float-sm-left" style="width: 65%"><p>Wolworth watson hils</p></div>
+          <div class="float-sm-right" style="width: 35%; text-align:right;"><a href="">view store</a></div>
+      </div>
+      <div><p class="store" style="padding:0">PRODUCT DESCRIPTION</p></div>
+      <div style="max-height:11rem; overflow-y: scroll; overflow-x: hidden; padding-top:1px;">
+          <p class="card-text">
+              Product is good in condition, well preserved and status checked.
+              Product is good in condition, well preserved and status checked.
+              Product is good in condition, well preserved and status checked.
+              Product is good in condition, well preserved and status checked.
+              Product is good in condition, well preserved and status checked.
+          </p>
+      </div>
+
+  </div>
+  </div>
+
+
+</div>
+</div>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+        function goBack() {
+          window.history.back();
+        }
+  </script>
+</body>
+
+</html>

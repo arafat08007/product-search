@@ -1,0 +1,80 @@
+{% load static %}
+
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps - pygmaps </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/project.css' %}">
+
+</head>
+
+<body>
+    <div class="content" >
+    <div class="card" style="color:#828282; max-height:36rem; overflow-y: scroll; overflow-x: hidden">
+        <article class="card-body" style="width: 20rem; height: 36rem;">
+            <p class="login float-left">Login</p>
+            <div style="margin-left: 40%;"><a style="color:#4d4d4d;" href="{% url 'signup' %}">Sign up</a></div>
+            <div class="relative" style="margin: 40px 0;">
+                <span class="signup-span">your greeting text</span>
+                <h2 style="font-weight:900;" class="card-title mb-4 mt-1">Welcome !</h2>
+            </div>
+            <form name="authcheck" method="POST" action="{% url 'mappoint' %}">
+                {% csrf_token %}
+                <div  class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" class="form-control sign-input" type="email">
+                </div>
+                <div  class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" class="form-control sign-input" type="password">
+                </div>
+                <div class="form-group" style="text-align:center;">
+                    <button style="padding: 10px 80px;border-radius: 11px;" type="submit" class="btn btn-dark"> Log in </button>
+                </div>
+                <p style="text-align:center; color:red;">
+                    {% if message %}
+                    {{ message }}
+                    {% endif %}
+                </p>
+            </form>
+            <div style="text-align: center;"><p style="font-size:20px; border-bottom: 1px solid #d0c9c9; padding-bottom: 8px;">or</p></div>
+            <div>
+                <div style="text-align:center; font-size: 50px;">
+                    <a style="padding-right:20px"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+                    <a><i class="fa fa-google" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top: 10px;"><a href="">Already have an account?</a></div>
+        </article>
+
+    </div>
+
+</div>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+
+          function displayStore () {
+          var checkbox = document.getElementById("check").checked;
+          console.log(checkbox);
+          if (checkbox) {
+          document.getElementById("store_div").style.display = "inline";
+          }
+          else {
+          document.getElementById("store_div").style.display = "None";
+          }
+          }
+
+    </script>
+</body>
+
+</html>

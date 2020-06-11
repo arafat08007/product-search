@@ -1,0 +1,187 @@
+{% load static %}
+
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps - pygmaps </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+
+    <link rel="stylesheet" href="{% static 'css/project.css' %}">
+
+</head>
+
+<body>
+    <div class="content" style="color:#828282;">
+    <div class="card" >
+        <span onclick="goBack()"><i style="padding: 5px 0px 0px 10px;font-size: 25px; font-weight: bold;" class="fa fa-angle-left" aria-hidden="true"></i></span>
+        <article class="card-body" style="width: 20rem; ">
+            <div class="relative" style="margin: 0px 0;">
+                <span class="signup-span">your business information</span>
+                <h2 style="font-weight:900;" class="card-title mb-4 mt-1">Update</h2>
+            </div>
+        </article>
+    </div>
+         <div style="margin: 0px -5px; background:#F2F2F2; max-height:27rem; overflow-y: scroll; overflow-x: hidden">
+             <h6 style="padding: 15px 15px 0px 15px;font-weight: 501; margin-left: 23px;">Basic information</h6>
+        <form style="padding: 1px 35px;" name="authcheck" method="POST" action="{% url 'signuprequest' %}">
+                {% csrf_token %}
+                <div  class="form-group">
+                    <input name="store_name" class="form-control sign-input" placeholder="Store name" type="text">
+                </div>
+                <div  class="form-group">
+                    <input name="address" class="form-control sign-input" placeholder="Address" type="text">
+                </div>
+                <div  class="form-group">
+                    <input name="phone" class="form-control sign-input" placeholder="Phone" type="text">
+                </div>
+                <div  class="form-group">
+                    <input name="country" class="form-control sign-input" placeholder="Country" type="text">
+                </div>
+                <div  class="form-group">
+                        <input name="city" class="form-control sign-input" placeholder="City" type="text">
+                    </div>
+                <div  class="form-group">
+                    <input name="postal" class="form-control sign-input" placeholder="Postal Code" type="text">
+                </div>
+                <div  class="form-group">
+                    <input name="category" class="form-control sign-input" placeholder="Business Category" type="text">
+                </div>
+            <div class="upload-btn-wrapper">
+                  <button style="padding: 5px 196px 5px 10px; font-weight: 500; margin-bottom: 15px;" class="btn-upload">Store Image</button>
+                  <input type="file" name="myfile" />
+                </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                    <input placeholder="Opening Time" style="border-radius: 10px 0px 0px 10px;" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                    <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                        <div style="border-radius: 0px 10px 10px 0px;" class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                    <input placeholder="Closing Time" style="border-radius: 10px 0px 0px 10px;" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                    <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                        <div style="border-radius: 0px 10px 10px 0px;" class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+            <p style="margin-bottom: 5px;" class="form-check-label">Opening Days</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                      <label class="form-check-label" for="inlineCheckbox1">Sat</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                      <label class="form-check-label" for="inlineCheckbox2">Sun</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                      <label class="form-check-label" for="inlineCheckbox3">Mon</label>
+                    </div>
+
+            <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                      <label class="form-check-label" for="inlineCheckbox3">Tue</label>
+                    </div>
+            <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                      <label class="form-check-label" for="inlineCheckbox3">Wed</label>
+                    </div>
+            <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                      <label class="form-check-label" for="inlineCheckbox3">Thu</label>
+                    </div>
+            <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                      <label class="form-check-label" for="inlineCheckbox3">Fri</label>
+                    </div>
+
+
+                <h6 style="padding: 15px 15px 0px 15px;font-weight: 501; margin: 15px -15px;;">Optional information</h6>
+                <div  class="form-group">
+                    <input name="website" class="form-control sign-input" placeholder="Website" type="text">
+                </div>
+                <div  class="form-group">
+                    <input name="facebook" class="form-control sign-input" placeholder="Facebook" type="text">
+                </div>
+                <div  class="form-group">
+                    <input name="twitter" class="form-control sign-input" placeholder="Twitter" type="text">
+                </div>
+
+                <div class="form-group" style="text-align:center;">
+                    <button style="padding: 10px 80px;border-radius: 11px;" type="submit" class="btn btn-dark"> Update </button>
+                </div>
+                <p style="text-align:center; color:red;">
+                    {% if message %}
+                    {{ message }}
+                    {% endif %}
+                </p>
+            </form>
+         </div>
+    </div>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+    function goBack() {
+    console.log('hit');
+  window.history.back();
+}
+
+          function displayStore () {
+          var checkbox = document.getElementById("check").checked;
+          console.log(checkbox);
+          if (checkbox) {
+          document.getElementById("store_div").style.display = "inline";
+          }
+          else {
+          document.getElementById("store_div").style.display = "None";
+          }
+          }
+
+    </script>
+
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker3').datetimepicker({
+                    format: 'LT'
+                });
+            });
+            $(function () {
+                $('#datetimepicker4').datetimepicker({
+                    format: 'LT'
+                });
+            });
+        </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
+</body>
+
+</html>

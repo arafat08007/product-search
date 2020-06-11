@@ -1,0 +1,100 @@
+{% load static %}
+
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Google Maps - pygmaps </title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/project.css' %}">
+</head>
+
+<body onload="initialize()">
+  <div class="content">
+    <div class="card" style="width: 20rem;">
+                <span onclick="goBack()"><i style="margin-bottom: 5px; padding: 5px 0px 0px 10px; font-size: 25px; font-weight: bold;" class="fa fa-angle-left" aria-hidden="true"></i></span>
+      <div style="color:#828282; max-height:34rem; overflow-y: scroll; overflow-x: hidden">
+         <div style="padding:0 10px">
+             <div style="top:95%; left:0; transform: translate(25%, -50%);" class="btn-group capsule-button" role="group" aria-label="Basic example">
+                <button
+                    style="line-height: 0.5; padding:10px 25px; border-radius: 25px 0px 0px 25px; box-shadow: 0px 0px 4px 1px #aaa;"
+                    type="button" class="btn btn-warning btn-sm ">
+                    <a style="color:black; text-decoration: None;"
+                        href="{% url 'updateinfo' %}">Edit Info</a>
+                </button>
+                <button
+                    style="line-height: 0.5;padding:10px 10px;border-radius: 0px 25px 25px 0px; box-shadow: 0px 0px 4px 1px #aaa;"
+                    type="button" class="btn btn-primary btn-sm"><a style="color:white; text-decoration: None;"
+                        href="{% url 'storeproducts' %}">View Products</a></button>
+            </div>
+
+
+          <img class="card-img-top" style="width: 100%; height: 150px;" src="https://i.picsum.photos/id/427/200/200.jpg"
+            alt="Card image cap">
+        <div class="card-body" style="margin-top: 0; border: 1px solid #bbb5b5; border-radius: 0px 0px 10px 10px;">
+            <div class="row" style="margin:0; margin-bottom: 20px;">
+                <div style="width:60%;">
+                    <h5 style="font-weight:501;" class="card-title">Pizza Inn</h5>
+                </div>
+                <div style="width:40%; text-align:right">
+                    <h5 style="font-weight:501; " class="card-title">$20-$100</h5>
+                </div>
+            </div>
+          <div class="row" style="margin:0;">
+                <div style="margin-left:-15px; margin-top:5px; padding: 5px 0px 5px 5px; width:50%; border: 1px solid #4d4d4d; border-radius: 50px 50px;">
+                    <a href="tel:111222333" style="text-decoration: None; color:#4d4d4d; font-weight:501;font-size: 18px;" class="card-title">+108379734</a>
+                </div>
+                <div style="margin-left:15px; width:50%; text-align:right; margin-top: 10px;">
+                    <a href="#" class="card-title">www.pizzain.com</a>
+                </div>
+            </div>
+        </div>
+
+      <h6 style="margin-top:3rem; letter-spacing: 3px; font-weight: 501;">ADDRESS</h6>
+      <div class="row" style="padding: 10px 0 0 10px;margin:0;border: 1px solid #bbb5b5; border-radius: 10px 10px 10px 10px;">
+          <p>Navana GH Heights, 67, 12th Floor, Satjid Road, Dhaka 1209</p>
+      </div>
+      <h6 style="margin-top:1rem; letter-spacing: 3px; font-weight: 501;">CATEGORY</h6>
+      <div class="row" style="padding: 10px 0 0 10px;margin:0;border: 1px solid #bbb5b5; border-radius: 10px 10px 10px 10px;">
+          <p>Restaurant</p>
+      </div>
+      <h6 style="margin-top:1rem; letter-spacing: 3px; font-weight: 501;">OPENING DAYS</h6>
+      <p>Sunday - Friday</p>
+      <h6 style="margin-top:1rem; letter-spacing: 3px; font-weight: 501;">OPENING TIME</h6>
+      <p>9:30 AM - 4:30 PM</p>
+      </div>
+        </div>
+    </div>
+</div>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU"></script>
+  <script type="text/javascript">
+
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+
+</html>

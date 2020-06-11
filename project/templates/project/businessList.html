@@ -1,0 +1,156 @@
+{% load static %}
+
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Google Maps - pygmaps </title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'css/project.css' %}">
+</head>
+
+<body onload="initialize()">
+  <div class="content" style="height:36rem">
+
+    <div class="card" style="width: 20rem;">
+     <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <a href="#">Home</a>
+            <a href="{% url 'businesslist' %}">Find Business</a>
+            <a href="{% url 'productlist' %}">Find Products</a>
+            <a href="{% url 'updateinfo' %}">Update Store Info</a>
+            <a href="{% url 'addproduct' %}">Add Product</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+
+
+<!--      <div id="main">-->
+<!--        <button class="openbtn" onclick="openNav()">☰</button>-->
+<!--      </div>-->
+
+  <div class="input-group mb-3 white-nav">
+      <div class="input-group-prepend">
+        <span class="input-group-text custom-input-group-text" onclick="openNav()" id="basic-addon1">☰</span>
+      </div>
+      <input type="text" class="form-control custom-form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+    </div>
+
+<!--      <div class="card-body " style="padding:0px; margin-top: -15px; margin-bottom:15px;">-->
+<!--        <div style="width: 100%;"></div>-->
+<!--        <div class="" id="result"-->
+<!--          style="border: 2px solid white; text-align:center; height:40px;background-color:white; border-radius: 25px;">-->
+<!--          <p style='height:40px'> <span style="color:#4d4d4d">10 Business Found</span>  <a href="{% url 'mappoint' %}" style='color:#06d0ff;'></a></p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <div class="card-body " style="text-align:center; padding:0px; margin-top: 15px; margin-bottom:5px;">
+          <div style="width: 100%; margin: 15px 0 5px;"></div>
+        <div class="btn-group capsule-button" role="group" aria-label="Basic example">
+                <button
+                    style="line-height: 0.5; padding:10px 25px; border-radius: 25px 0px 0px 25px; box-shadow: 0px 0px 4px 1px #aaa;"
+                    type="button" class="btn btn-sm ">
+                    <a style="color:black; text-decoration: None;"
+                        href="{% url 'businessmap' %}">Map</a>
+                </button>
+                <button
+                    style="line-height: 0.5;padding:10px 25px;border-radius: 0px 25px 25px 0px; box-shadow: 0px 0px 4px 1px #aaa;"
+                    type="button" class="btn btn-primary btn-sm">List</button>
+            </div>
+      </div>
+
+      <div class="card">
+        <div class="relative" style="background: #FBFBFB; max-height:29rem; overflow-y: scroll; overflow-x: hidden">
+        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
+          <div class="business-card">
+          <div class="row">
+            <div class="col-4">
+              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
+            </div>
+            <div class="col-8">
+              <div class="card-block" style="margin: 20px 25px;">
+                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
+                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
+          <div class="business-card">
+          <div class="row">
+            <div class="col-4">
+              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
+            </div>
+            <div class="col-8">
+              <div class="card-block" style="margin: 20px 25px;">
+                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
+                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
+          <div class="business-card">
+          <div class="row">
+            <div class="col-4">
+              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
+            </div>
+            <div class="col-8">
+              <div class="card-block" style="margin: 20px 25px;">
+                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
+                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
+          <div class="business-card">
+          <div class="row">
+            <div class="col-4">
+              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
+            </div>
+            <div class="col-8">
+              <div class="card-block" style="margin: 20px 25px;">
+                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
+                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </a>
+        <div style="top:95%" class="find_busniess"><a style="color:#4d4d4d" href="{% url 'productlist' %}">Find Products</a></div>
+      </div>
+      </div>
+
+      </div>
+    </div>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU"></script>
+  <script type="text/javascript">
+
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    }
+  </script>
+</body>
+
+</html>
