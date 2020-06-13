@@ -1,20 +1,24 @@
 from math import acos, sin, cos
+from django.core.files.images import ImageFile
 from algoliasearch.search_client import SearchClient
 from django.shortcuts import render, redirect
 from google.auth.transport import requests
+import math
 from requests.exceptions import HTTPError
 from .models import MapPoint
 from django.contrib import auth
 from django.db.models import Max
+from datetime import datetime
 import gmplot
 import geocoder
 import pyrebase
 import re
+import base64
+import json
+
 
 API_KEY = "AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU"
-user_location = geocoder.ip('me')
-print(user_location)
-user_location = [27.054, 56.463]
+user_location = geocoder.ip('me').latlng
 user_lat_location = user_location[0]
 user_long_location = user_location[1]
 lat_max_range = user_lat_location + 0.008983 * 5
@@ -32,7 +36,19 @@ config = {
 firebase = pyrebase.initialize_app(config)
 firebase_auth = firebase.auth()
 db = firebase.database()
+# storage = firebase.storage()
 regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+
+
+def distance(lat1, lon1, lat2, lon2):
+    radius = 6371
+    dlat = math.radians(lat2-lat1)
+    dlon = math.radians(lon2-lon1)
+    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
+        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    d = radius * c
+    return round(d, 1)
 
 
 def map_point(request):
@@ -88,23 +104,14 @@ def map_with_key(request):
 
 
 def listProduct(request):
-    query_set = MapPoint.objects.filter(lat__range=(lat_min_range, lat_max_range)).values_list('lat', 'long')
-    avaialble_location = list(query_set)
-    search_result = len(avaialble_location)
-    lat_location_list = []
-    long_location_list = []
-    for item in avaialble_location:
-        lat_location_list.append(item[0])
-        long_location_list.append(item[1])
-    # return render(request, 'project/productListView.html', {})
-    return render(request, 'project/productListView.html', {
-            'user_lat_location': user_lat_location,
-            'user_long_location': user_long_location,
-            'lat_location_list': lat_location_list,
-            'long_location_list': long_location_list,
-            'search_result': search_result,
-            'map_key': 0
-        })
+    send_dict = {}
+    all_products = db.child().get()
+    for product in all_products.each():
+        u_product = product.val().get('products')
+        if u_product:
+            for key, value in u_product.items():
+                send_dict[key] = value
+    return render(request, 'project/productListView.html', {"data": send_dict})
 
 
 def signIn(request):
@@ -129,9 +136,11 @@ def authCheck(request):
     except:
         message = 'Invalid Credentials'
         return render(request, 'project/signin.html', {'message': message})
-    session_id = user['idToken']
-    print(user)
+
+    session_id = user['localId']
+    print(user['idToken'])
     request.session['uid'] = str(session_id)
+    request.session['idToken'] = str(user['idToken'])
     return redirect('mappoint')
 
 
@@ -145,20 +154,20 @@ def signup(request):
 
 
 def signup_request(request):
-    store_name = request.POST.get('store_name', '')
+    # store_name = request.POST.get('store_name', '')
     email = request.POST.get('email', '')
     password = request.POST.get('password', '')
     confirm_password = request.POST.get('confirm_password', '')
-    status = request.POST.get('status', '')
+    # status = request.POST.get('status', '')
 
     if not re.search(regex, email):
         message = "Invalid email"
         return render(request, 'project/signup.html', {"message": message})
 
-    if status == '1':
-        if store_name is "":
-            message = "Enter store name"
-            return render(request, 'project/signup.html', {"message": message})
+    # if status == '1':
+    #     if store_name is "":
+    #         message = "Enter store name"
+    #         return render(request, 'project/signup.html', {"message": message})
 
     if len(password) < 6:
         message = "Password should be at least 6 characters"
@@ -170,30 +179,54 @@ def signup_request(request):
 
     try:
         user = firebase_auth.create_user_with_email_and_password(email, password)
+        print(user)
     except HTTPError as e:
         message = "Email exists"
         return render(request, 'project/signup.html', {"message": message})
 
-    uid = user['localId']
+    # uid = user['localId']
 
-    if status == "1":
-        print(status, store_name)
-        data = {
-            "store_name": store_name,
-            "lat": user_lat_location,
-            "long": user_long_location,
-            "status": "business_user"
-        }
-        db.child(uid).child("user_info").set(data)
+    # if status == "1":
+    #     print(status, store_name)
+    #     data = {
+    #         "store_name": store_name,
+    #         "lat": user_lat_location,
+    #         "long": user_long_location,
+    #         "status": "business_user"
+    #     }
+    #     db.child(uid).child("user_info").set(data)
     return render(request, 'project/signin.html', {})
 
 
-def product_details(request):
-    return render(request, 'project/product_details.html', {})
+def product_details(request, key):
+    print(key)
+    uid = request.session.get('uid')
+    product_data = db.child(uid).child("products").child(key).get().val()
+    product_data = json.loads(json.dumps(product_data))
+    store_uid = product_data.get('uid')
+    store_data = db.child(store_uid).child('user_info').get().val()
+    store_data = json.loads(json.dumps(store_data))
+    return render(request, 'project/product_details.html', {
+        "data": product_data,
+        "store_name": store_data.get('store_name')
+    })
 
 
 def business_list(request):
-    return render(request, 'project/businessList.html', {})
+    send_dict = {}
+    all_users = db.child().get()
+    for product in all_users.each():
+        user_info = product.val().get('user_info')
+        distance_km = distance(
+            float(product.val().get('user_info').get('lat')),
+            float(product.val().get('user_info').get('long')),
+            user_lat_location,
+            user_long_location
+        )
+        user_info['distance'] = distance_km
+        send_dict[product.key()] = user_info
+    print(send_dict)
+    return render(request, 'project/businessList.html', {"data": send_dict})
 
 
 def add_product(request):
@@ -201,14 +234,86 @@ def add_product(request):
 
 
 def add_product_firebase(request):
+    uid = request.session.get('uid')
+    data = db.child(uid).get().val()
+    dict = json.loads(json.dumps(data))
+    store_name = dict.get('user_info').get('store_name')
+    lat = dict.get('user_info').get('lat')
+    long = dict.get('user_info').get('long')
     name = request.POST.get('name', '')
     price = request.POST.get('price', '')
     description = request.POST.get('description', '')
-    print(name, price, description)
+    image = request.FILES['image']
+    encoded_string = base64.b64encode(image.read())
+    imgdata = encoded_string.decode("utf-8")
+    created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    updated_at = created_at
+    product = {
+        "product_name": name,
+        "product_price": price,
+        "product_image": imgdata,
+        "product_description": description,
+        "lat": lat,
+        "long": long,
+        "uid": uid,
+        "store_name":store_name,
+        "created_at": created_at,
+        "updated_at": updated_at,
+    }
+    product_firebase = db.child(uid).child("products").push(product)
+    print(product_firebase)
+    return redirect('addproduct')
+
+
+def add_business_firebase(request):
+    store_name = request.POST.get('store_name', '')
+    address = request.POST.get('address', '')
+    phone = request.POST.get('phone', '')
+    country = request.POST.get('country', '')
+    city = request.POST.get('city', '')
+    postal = request.POST.get('postal', '')
+    category = request.POST.get('category', '')
+    price_range = request.POST.get('price_range', '')
+    open_time = request.POST.get('open_time', '')
+    close_time = request.POST.get('close_time', '')
+    days = request.POST.getlist('days')
+    image = request.FILES['image']
+    lat = request.POST.get('lat', '')
+    long = request.POST.get('long', '')
+    facebook = request.POST.get('facebook', '')
+    website = request.POST.get('website', '')
+    twitter = request.POST.get('twitter', '')
+    encoded_string = base64.b64encode(image.read())
+    imgdata = encoded_string.decode("utf-8")
+    days_data = ""
+    for item in days:
+        days_data += item+', '
     uid = request.session.get('uid')
-    user_data = db.child(uid).get()
-    print(user_data)
-    return render(request, 'project/addproduct.html', {})
+    created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    updated_at = created_at
+    data = {
+        "store_name": store_name,
+        "address": address,
+        "phone": phone,
+        "country": country,
+        "city": city,
+        "postal": postal,
+        "category": category,
+        "price_range": price_range,
+        "open_time": open_time,
+        "close_time": close_time,
+        "days": days_data,
+        "img": imgdata,
+        "lat": lat,
+        "long": long,
+        "facebook": facebook,
+        "website": website,
+        "twitter": twitter,
+        "created_at": created_at,
+        "updated_at": updated_at,
+    }
+    name = db.child(uid).child("user_info").set(data)
+    return redirect('storedetails')
 
 
 def business_map(request):
@@ -234,8 +339,13 @@ def update_info(request):
     return render(request, 'project/updateinfo.html', {})
 
 
-def store_details(request):
-    return render(request, 'project/store_details.html', {})
+def store_details(request, key):
+    uid = request.session.get('uid')
+    data = db.child(key).get().val()
+    output_dict = json.loads(json.dumps(data))
+    return render(request, 'project/store_details.html', {
+        "data": output_dict.get('user_info')
+    })
 
 
 def dashboard(request):
@@ -243,7 +353,14 @@ def dashboard(request):
 
 
 def store_products(request):
-    return render(request, 'project/store_products.html', {})
+    uid = request.session.get('uid')
+    print(uid)
+    data = db.child(uid).child("products").get().val()
+    data = json.loads(json.dumps(data))
+    return render(request, 'project/store_products.html', {
+        "data": data,
+        "total": len(data)
+    })
 
 
 def change_password(request):

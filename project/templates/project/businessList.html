@@ -19,10 +19,13 @@
     <div class="card" style="width: 20rem;">
      <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <a href="#"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
-            <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
+
+            <a href="{% url 'mappoint' %}"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
+                              <a href="{% url 'dashboard' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Dashboard</a>
+       <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
             <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>
-            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Update Store Info</a>
+            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Business</a>
+
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
             <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
@@ -50,81 +53,39 @@
       <div class="card-body " style="text-align:center; padding:0px; margin-top: 15px; margin-bottom:5px;">
           <div style="width: 100%; margin: 15px 0 5px;"></div>
         <div class="btn-group capsule-button" role="group" aria-label="Basic example">
-                <button
+                <a href="{% url 'businessmap' %}"
                     style="line-height: 0.5; padding:10px 25px; border-radius: 25px 0px 0px 25px; box-shadow: 0px 0px 4px 1px #aaa;"
                     type="button" class="btn btn-sm ">
-                    <a style="color:black; text-decoration: None;"
-                        href="{% url 'businessmap' %}">Map</a>
-                </button>
-                <button
-                    style="line-height: 0.5;padding:10px 25px;border-radius: 0px 25px 25px 0px; box-shadow: 0px 0px 4px 1px #aaa;"
-                    type="button" class="btn btn-primary btn-sm">List</button>
+                    <span style="color:black; text-decoration: None;"
+                        >Map</span>
+                </a>
+                <a
+                    style="color:white;line-height: 0.5;padding:10px 25px;border-radius: 0px 25px 25px 0px; box-shadow: 0px 0px 4px 1px #aaa;"
+                    type="button" class="btn btn-primary btn-sm">List</a>
             </div>
       </div>
 
       <div class="card">
         <div class="relative" style="background: #FBFBFB; max-height:29rem; overflow-y: scroll; overflow-x: hidden">
-        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
+          {% for key, value in data.items %}
+        <a href="{% url 'storedetails' key=0 %}" style="text-decoration: None;">
           <div class="business-card">
           <div class="row">
             <div class="col-4">
-              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
+              <img style="border-radius: 50px; width:85px; height:85px;"
+                   src="data:image/png;base64, {{value.img}}">
             </div>
-            <div class="col-8">
+            <div class="col-8" style="margin-left: -20px;">
               <div class="card-block" style="margin: 20px 25px;">
-                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
-                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
+                <h6 class="card-title" style="margin:0; color:#4d4d4d;">{{value.store_name}}</h6>
+                <p style="margin:0; color:#247FB3;" class="card-text">{{value.distance}} km away</p>
               </div>
             </div>
           </div>
         </div>
         </a>
-        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
-          <div class="business-card">
-          <div class="row">
-            <div class="col-4">
-              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
-            </div>
-            <div class="col-8">
-              <div class="card-block" style="margin: 20px 25px;">
-                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
-                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        </a>
-        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
-          <div class="business-card">
-          <div class="row">
-            <div class="col-4">
-              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
-            </div>
-            <div class="col-8">
-              <div class="card-block" style="margin: 20px 25px;">
-                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
-                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        </a>
-        <a href="{% url 'storedetails' %}" style="text-decoration: None;">
-          <div class="business-card">
-          <div class="row">
-            <div class="col-4">
-              <img style="border-radius: 50px; width:85px; height:85px;" src="https://i.picsum.photos/id/427/200/200.jpg">
-            </div>
-            <div class="col-8">
-              <div class="card-block" style="margin: 20px 25px;">
-                <h6 class="card-title" style="margin:0; color:#4d4d4d;">Pizza Inn</h6>
-                <p style="margin:0; color:#247FB3;" class="card-text">2.1 km away</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        </a>
-        <div style="top:95%" class="find_busniess"><a style="color:#4d4d4d" href="{% url 'productlist' %}">Find Products</a></div>
+           {% endfor %}
+        <div style="top:95%" ><a class="find_busniess" style="color:#4d4d4d; text-decoration: none;" href="{% url 'productlist' %}">Find Products</a></div>
       </div>
       </div>
 

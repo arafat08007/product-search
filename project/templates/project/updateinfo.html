@@ -28,7 +28,7 @@
     </div>
          <div style="margin: 0px -5px; background:#F2F2F2; max-height:27rem; overflow-y: scroll; overflow-x: hidden">
              <h6 style="padding: 15px 15px 0px 15px;font-weight: 501; margin-left: 23px;">Basic information</h6>
-        <form style="padding: 1px 35px;" name="authcheck" method="POST" action="{% url 'signuprequest' %}">
+        <form style="padding: 1px 35px;" name="authcheck" method="POST" action="{% url 'addbusinessfirebase' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div  class="form-group">
                     <input name="store_name" class="form-control sign-input" placeholder="Store name" type="text">
@@ -48,12 +48,22 @@
                 <div  class="form-group">
                     <input name="postal" class="form-control sign-input" placeholder="Postal Code" type="text">
                 </div>
-                <div  class="form-group">
+            <div  class="form-group">
                     <input name="category" class="form-control sign-input" placeholder="Business Category" type="text">
                 </div>
+            <div  class="form-group">
+                    <input name="price_range" class="form-control sign-input" placeholder="Product Price Range" type="text">
+                </div>
+            <div  class="form-group">
+                    <input name="lat" class="form-control sign-input" placeholder="Latitude" type="text">
+                </div>
+            <div  class="form-group">
+                    <input name="long" class="form-control sign-input" placeholder="Longitude" type="text">
+                </div>
+
             <div class="upload-btn-wrapper">
                   <button style="padding: 5px 150px 5px 10px; font-weight: 500; margin-bottom: 15px;" class="btn-upload">Store Image</button>
-                  <input type="file" name="myfile" />
+                  <input type="file" name="image" id="image" />
                 </div>
 
 
@@ -61,7 +71,7 @@
         <div class="col-sm-12">
             <div class="form-group">
                 <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                    <input placeholder="Opening Time" style="border-radius: 10px 0px 0px 10px;" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                    <input name="open_time" placeholder="Opening Time" style="border-radius: 10px 0px 0px 10px;" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
                     <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                         <div style="border-radius: 0px 10px 10px 0px;" class="input-group-text"><i class="fa fa-clock-o"></i></div>
                     </div>
@@ -74,7 +84,7 @@
         <div class="col-sm-12">
             <div class="form-group">
                 <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                    <input placeholder="Closing Time" style="border-radius: 10px 0px 0px 10px;" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                    <input name="close_time" placeholder="Closing Time" style="border-radius: 10px 0px 0px 10px;" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
                     <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
                         <div style="border-radius: 0px 10px 10px 0px;" class="input-group-text"><i class="fa fa-clock-o"></i></div>
                     </div>
@@ -87,32 +97,32 @@
 
             <p style="margin-bottom: 5px;" class="form-check-label">Opening Days</p>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input name="days" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Sat">
                       <label class="form-check-label" for="inlineCheckbox1">Sat</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                      <input name="days" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Sun">
                       <label class="form-check-label" for="inlineCheckbox2">Sun</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                      <input name="days" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Mon">
                       <label class="form-check-label" for="inlineCheckbox3">Mon</label>
                     </div>
 
             <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                      <input name="days" class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Tue">
                       <label class="form-check-label" for="inlineCheckbox3">Tue</label>
                     </div> <br>
             <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                      <input name="days" class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Wed">
                       <label class="form-check-label" for="inlineCheckbox3">Wed</label>
                     </div>
             <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                      <input name="days" class="form-check-input" type="checkbox" id="inlineCheckbox6" value="Thu">
                       <label class="form-check-label" for="inlineCheckbox3">Thu</label>
                     </div>
             <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                      <input name="days" class="form-check-input" type="checkbox" id="inlineCheckbox7" value="Fri">
                       <label class="form-check-label" for="inlineCheckbox3">Fri</label>
                     </div>
 

@@ -13,48 +13,49 @@
     <link rel="stylesheet" href="{% static 'css/project.css' %}">
 </head>
 
-<body onload="initialize()">
-  <div class="content">
+<body >
+  <div class="content" >
     <div class="card" style="width: 20rem;">
                 <span onclick="goBack()"><i style="margin-bottom: 5px; padding: 5px 0px 0px 10px; font-size: 25px; font-weight: bold;" class="fa fa-angle-left" aria-hidden="true"></i></span>
-      <div style="color:#828282; max-height:32rem; overflow-y: scroll; overflow-x: hidden">
+      <div style="color:black; max-height:33rem; overflow-y: scroll; overflow-x: hidden">
          <div style="padding:0 10px">
-          <img class="card-img-top" style="box-shadow: 0px 0px 4px 1px #aaa; width: 100%; height: 150px;" src="https://i.picsum.photos/id/427/200/200.jpg"
-            alt="Card image cap">
+
         <div class="card-body" style="box-shadow: 0px 0px 4px 1px #aaa;margin-top: 0; border: 1px solid #bbb5b5; border-radius: 0px 0px 10px 10px;">
+            <img class="card-img-top" style="margin-bottom: 15px;width: 100%; height: 150px;" src="data:image/png;base64, {{data.img}}"
+            alt="Card image cap">
             <div class="row" style="margin:0; margin-bottom: 0px;">
                 <div style="width:60%;">
-                    <h5 style="font-weight:501;" class="card-title">Pizza Inn</h5>
+                    <h5 style="font-weight:501;" class="card-title">{{data.store_name}}</h5>
                 </div>
                 <div style="width:40%; text-align:right">
-                    <h5 style="font-weight:501; " class="card-title">$20-$100</h5>
+                    <h5 style="font-weight:501; color:#F7797A " class="card-title">{{data.price_range}}</h5>
                 </div>
             </div>
           <div class="row" style="margin:0;">
                 <div style="margin-left:-15px; margin-top:5px; padding: 5px 0px 5px 5px; width:50%; border: 1px solid #4d4d4d; border-radius: 50px 50px;">
-                    <a href="tel:111222333" style="text-decoration: None; color:#4d4d4d; font-weight:501;font-size: 18px;" class="card-title">+108379734</a>
+                    <a href="tel:{{data.phone}}" style="margin-left: 8px;text-decoration: None; color:#4d4d4d; font-weight:501;font-size: 18px;" class="card-title">{{data.phone}}</a>
                 </div>
                 <div style="margin-left:15px; width:50%; text-align:right; margin-top: 10px;">
-                    <a href="#" class="card-title">www.pizzain.com</a>
+                    <a href="{{data.website}}" class="card-title">{{data.website}}</a>
                 </div>
             </div>
         </div>
 
-      <h6 style="margin-top:1rem; letter-spacing: 3px; font-weight: 501;">ADDRESS</h6>
+      <h6 style="margin-top:1rem; margin-bottom:5px; letter-spacing: 3px; font-weight: 501;">ADDRESS</h6>
       <div class="row" style="padding: 0px 0 0 5px;margin:0;border-bottom: 1px solid #bbb5b5;">
-          <p>Navana GH Heights, 67, 12th Floor, Satjid Road, Dhaka 1209</p>
+          <p style="margin-bottom: 5px;font-size: 12px; color: #403b3b;text-align: justify;">{{data.address}}</p>
       </div>
-      <h6 style="margin-top:1rem; letter-spacing: 3px; font-weight: 501;">CATEGORY</h6>
+      <h6 style="margin-top:10px; margin-bottom:5px; letter-spacing: 3px; font-weight: 501;">CATEGORY</h6>
       <div class="row" style="padding: 0px 0 0 5px;margin:0;border-bottom: 1px solid #bbb5b5;">
-          <p>Restaurant</p>
+          <p style="margin-bottom: 5px;font-size: 12px; color: #403b3b;text-align: justify;">{{data.category}}</p>
       </div>
-      <h6 style="margin-top:1rem; letter-spacing: 3px; font-weight: 501;">OPENING DAYS</h6>
+      <h6 style="margin-top:10px; margin-bottom:5px; letter-spacing: 3px; font-weight: 501;">OPENING DAYS</h6>
       <div class="row" style="padding: 0px 0 0 5px;margin:0;border-bottom: 1px solid #bbb5b5;">
-          <p>Sun, Mon, Tue, Wed, Thu</p>
+          <p style="margin-bottom: 5px;font-size: 12px; color: #403b3b;text-align: justify;">Sun, Mon, Tue, Wed, Thu</p>
       </div>
-      <h6 style="margin-top:1rem; letter-spacing: 3px; font-weight: 501;">OPENING TIME</h6>
+      <h6 style="margin-top:10px; margin-bottom:5px;letter-spacing: 3px; font-weight: 501;">OPENING TIME</h6>
       <div class="row" style="padding: 0px 0 0 5px;margin:0;border-bottom: 1px solid #bbb5b5;">
-          <p>9:30 AM - 4:30 PM</p>
+          <p style="margin-bottom: 5px;font-size: 12px; color: #403b3b;text-align: justify;">{{data.open_time}} - {{data.close_time}}</p>
       </div>
       </div>
         </div>
@@ -68,10 +69,10 @@
 
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU"></script>
   <script type="text/javascript">
-
+    function goBack() {
+  window.history.back();
+}
     function openNav() {
       document.getElementById("mySidebar").style.width = "250px";
       document.getElementById("main").style.marginLeft = "250px";
@@ -81,9 +82,7 @@
       document.getElementById("mySidebar").style.width = "0";
       document.getElementById("main").style.marginLeft = "0";
     }
-    function goBack() {
-  window.history.back();
-}
+
   </script>
 </body>
 

@@ -8,21 +8,25 @@
   <title>Google Maps - pygmaps </title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="{% static 'css/project.css' %}">
+          <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/project.css' %}">
 </head>
 
-<body onload="initialize()">
+<body>
+
   <div class="content" style="height:36rem">
     <div class="card" style="width: 20rem;">
 
       <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <a href="#"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
+                       <a href="{% url 'dashboard' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Dashboard</a>
+
+            <a href="{% url 'mappoint' %}"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
             <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
             <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>
-            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Update Store Info</a>
+            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Business</a>
+                      <a href="{% url 'dashboard' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Dashboard</a>
+
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
             <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
@@ -50,154 +54,50 @@
 <!--          </div>-->
 <!--        </div>-->
 <!--      </form>-->
-      <div class="card-body " style="padding:0px;">
+      <div class="card-body " style="padding:0px; margin-bottom:25px;">
         <div style="width: 100%;"></div>
         <div class="card-body " style="text-align:center; padding:0px; margin-top: -15px; margin-bottom:0px;">
           <div style="width: 100%; margin: 15px 0 5px;"></div>
 
       </div>
       </div>
-      <div class="relative" style="max-height:31rem; overflow-y: scroll; overflow-x: hidden">
+      <div class="relative" style="max-height:30rem; overflow-y: scroll; overflow-x: hidden">
+          {% for key, value in data.items %}
 
-        <div class="card card_list" style="margin-top: 25px">
-          <div class="row">
+          <div class="card card_list" style="margin-bottom: 1px">
+          <a href="{% url 'productdetails' key=key %}" style="text-decoration: none;">
+              <div class="row">
             <div class="col-4">
-              <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
+              <img src="data:image/png;base64, {{value.product_image}}" style="width: 80px; height: 80px; border-radius: 10px" >
             </div>
-            <div class="col-8">
-              <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
-                <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
-                  repreh, it have enderit.</p>
+            <div class="col-8" style="margin-left: -15px;">
+              <div class="card-block" style="margin-top: 5px">
+                <h6 style="margin:0; color:#4d4d4d; font-weight: bold; font-size: 15px;" class="card-title">{{value.product_name}}</h6>
+                <p style="font-size:11px;margin:0; color:#5b5252;" class="card-text">{{value.product_description}}</p>
                   <div class="row" style="margin:0">
-                      <div style="width:70%; text-align:left">
-                          <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
+                      <div style="width: 115px; text-align:left">
+                          <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">${{value.product_price}}</p>
                       </div>
-                      <div style="width:30%; text-align:right">
-                          <a href=""><i style="font-size: 20px; margin-right: 12px; color: yellowgreen;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a href=""><i style="font-size: 20px; color: #841515" class="fa fa-trash" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
-            <div class="col-4">
-              <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
-            </div>
-            <div class="col-8">
-              <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
-                <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
-                  repreh, it have enderit.</p>
-                <div class="row" style="margin:0">
-                      <div style="width:70%; text-align:left">
-                          <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
-                      </div>
-                      <div style="width:30%; text-align:right">
-                          <a href=""><i style="font-size: 20px; margin-right: 12px; color: yellowgreen;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a href=""><i style="font-size: 20px; color: #841515" class="fa fa-trash" aria-hidden="true"></i></a>
+                      <div style="width: 70px; text-align:right; margin-top: 1px;">
+                          <a href=""><i style="font-size: 17px; margin-right: 12px; color: yellowgreen;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                          <a href=""><i style="font-size: 17px; color: #841515" class="fa fa-trash" aria-hidden="true"></i></a>
                       </div>
                   </div>
               </div>
             </div>
           </div>
+          </a>
         </div>
-       <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
-            <div class="col-4">
-              <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
+          {% endfor %}
+
+
+        <div style="" class="btn-group capsule-button" role="group" aria-label="Basic example">
+                <a style="line-height: 0.5; padding:10px 25px; border-radius: 15px;"
+                    type="button" class="btn btn-sm ">
+                    <span style="color:black; text-decoration: None;">{{total}} Products</span>
+                </a>
             </div>
-            <div class="col-8">
-              <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
-                <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
-                  repreh, it have enderit.</p>
-                <div class="row" style="margin:0">
-                      <div style="width:70%; text-align:left">
-                          <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
-                      </div>
-                      <div style="width:30%; text-align:right">
-                          <a href=""><i style="font-size: 20px; margin-right: 12px; color: yellowgreen;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a href=""><i style="font-size: 20px; color: #841515" class="fa fa-trash" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
-            <div class="col-4">
-              <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
-            </div>
-            <div class="col-8">
-              <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
-                <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
-                  repreh, it have enderit.</p>
-                <div class="row" style="margin:0">
-                      <div style="width:70%; text-align:left">
-                          <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
-                      </div>
-                      <div style="width:30%; text-align:right">
-                          <a href=""><i style="font-size: 20px; margin-right: 12px; color: yellowgreen;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a href=""><i style="font-size: 20px; color: #841515" class="fa fa-trash" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
-            <div class="col-4">
-              <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
-            </div>
-            <div class="col-8">
-              <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
-                <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
-                  repreh, it have enderit.</p>
-                <div class="row" style="margin:0">
-                      <div style="width:70%; text-align:left">
-                          <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
-                      </div>
-                      <div style="width:30%; text-align:right">
-                          <a href=""><i style="font-size: 20px; margin-right: 12px; color: yellowgreen;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a href=""><i style="font-size: 20px; color: #841515" class="fa fa-trash" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       <div class="card card_list" style="margin-bottom: 1px">
-          <div class="row">
-            <div class="col-4">
-              <img src="https://i.picsum.photos/id/427/200/200.jpg" style="width: 80px; height: 80px; border-radius: 10px" >
-            </div>
-            <div class="col-8">
-              <div class="card-block" style="margin-left: 0px">
-                <a href="{% url 'productdetails' %}" style="margin:0; color:#4d4d4d; font-weight:501" class="card-title">Cotton Shirt</a>
-                <p style="font-size:12px;margin:0; color:#5b5252;" class="card-text">Duis aute irure dolor in
-                  repreh, it have enderit.</p>
-                <div class="row" style="margin:0">
-                      <div style="width:70%; text-align:left">
-                          <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">$349</p>
-                      </div>
-                      <div style="width:30%; text-align:right">
-                          <a href=""><i style="font-size: 20px; margin-right: 12px; color: yellowgreen;" class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a href=""><i style="font-size: 20px; color: #841515" class="fa fa-trash" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style="top:13%" class="find_busniess"><a style="color:#4d4d4d">4321 Products</a></div>
+        <div style="top:95%"><a class="find_busniess" style="text-decoration: none;color:#4d4d4d" href="{% url 'businesslist' %}">Find Business</a></div>
       </div>
     </div>
   </div>
@@ -210,10 +110,8 @@
 
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU"></script>
   <script type="text/javascript">
-
+    console.log({{data}})
     function openNav() {
       document.getElementById("mySidebar").style.width = "250px";
       document.getElementById("main").style.marginLeft = "250px";
@@ -223,6 +121,7 @@
       document.getElementById("mySidebar").style.width = "0";
       document.getElementById("main").style.marginLeft = "0";
     }
+
   </script>
 </body>
 

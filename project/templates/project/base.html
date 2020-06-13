@@ -18,10 +18,11 @@
     <div class="card" style="width: 20rem;">
         <div id="mySidebar" class="sidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <a href="#"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
+            <a href="{% url 'mappoint' %}"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
+                        <a href="{% url 'dashboard' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Dashboard</a>
             <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
             <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>
-            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Update Store Info</a>
+            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Business</a>
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
             <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
@@ -39,17 +40,17 @@
         <div class="card-body relative" style="padding:0px;">
             <div id="map_canvas" style="width: 100%; height: 33rem; border-radius: 10px;"></div>
             <div class="btn-group capsule-button" role="group" aria-label="Basic example">
-                <button
-                    style="line-height: 0.5; padding:10px 25px; border-radius: 25px 0px 0px 25px; box-shadow: 0px 0px 4px 1px #aaa;"
+                <a
+                    style="color:white;line-height: 0.5; padding:10px 25px; border-radius: 25px 0px 0px 25px; box-shadow: 0px 0px 4px 1px #aaa;"
                     type="button" class="btn btn-primary btn-sm ">
                     Map
-                </button>
-                <button
+                </a>
+                <a href="{% url 'productlist' %}"
                     style="line-height: 0.5;padding:10px 25px;border-radius: 0px 25px 25px 0px; box-shadow: 0px 0px 4px 1px #aaa;"
-                    type="button" class="btn btn-sm"><a style="color:black; text-decoration: None;"
-                        href="{% url 'productlist' %}">List</a></button>
+                    type="button" class="btn btn-sm"><span style="color:black; text-decoration: None;"
+                        >List</span></a>
             </div>
-            <div class="find_busniess" style="top: 95%;"><a style="color:#4d4d4d;" href="{% url 'businesslist' %}">Find Business</a></div>
+            <div style="top: 95%;"><a class="find_busniess" style="text-decoration: none; color:#4d4d4d;" href="{% url 'businesslist' %}">Find Business</a></div>
         </div>
 
     </div>
