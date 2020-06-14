@@ -22,9 +22,9 @@
                        <a href="{% url 'dashboard' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Dashboard</a>
 
             <a href="{% url 'mappoint' %}"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
-            <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
-            <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>
-            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Business</a>
+<!--            <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>-->
+<!--            <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>-->
+<!--            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Business</a>-->
                       <a href="{% url 'dashboard' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Dashboard</a>
 
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
@@ -65,7 +65,7 @@
           {% for key, value in data.items %}
 
           <div class="card card_list" style="margin-bottom: 1px">
-          <a href="{% url 'productdetails' key=key %}" style="text-decoration: none;">
+          <a href="{% url 'productdetails' key=key uid=value.uid %}" style="text-decoration: none;">
               <div class="row">
             <div class="col-4">
               <img src="data:image/png;base64, {{value.product_image}}" style="width: 80px; height: 80px; border-radius: 10px" >
@@ -73,7 +73,7 @@
             <div class="col-8" style="margin-left: -15px;">
               <div class="card-block" style="margin-top: 5px">
                 <h6 style="margin:0; color:#4d4d4d; font-weight: bold; font-size: 15px;" class="card-title">{{value.product_name}}</h6>
-                <p style="font-size:11px;margin:0; color:#5b5252;" class="card-text">{{value.product_description}}</p>
+                <p style="height: 3em; overflow: hidden; font-size:11px;margin:0; color:#5b5252;" class="card-text">{{value.product_description}}</p>
                   <div class="row" style="margin:0">
                       <div style="width: 115px; text-align:left">
                           <p style="margin:0; color:#F7797A; font-weight:501" class="card-text">${{value.product_price}}</p>

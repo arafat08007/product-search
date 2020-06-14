@@ -17,22 +17,24 @@ import base64
 import json
 
 
-API_KEY = "AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU"
+API_KEY = "AIzaSyBhoFFaf8hZHabaiTJjG2VXPz907Em-26Q"
 user_location = geocoder.ip('me').latlng
 user_lat_location = user_location[0]
 user_long_location = user_location[1]
 lat_max_range = user_lat_location + 0.008983 * 5
 lat_min_range = user_lat_location - 0.008983 * 5
+
 config = {
-    'apiKey': "AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU",
-    'authDomain': "mapploting.firebaseapp.com",
-    'databaseURL': "https://mapploting.firebaseio.com",
-    'projectId': "mapploting",
-    'storageBucket': "mapploting.appspot.com",
-    'messagingSenderId': "845625156693",
-    'appId': "1:845625156693:web:162b82d22aeb57992fe0dc",
-    'measurementId': "G-T5EVBNC4EP"
+    'apiKey': "AIzaSyBhoFFaf8hZHabaiTJjG2VXPz907Em-26Q",
+    'authDomain': "mainies.firebaseapp.com",
+    'databaseURL': "https://mainies.firebaseio.com",
+    'projectId': "mainies",
+    'storageBucket': "mainies.appspot.com",
+    'messagingSenderId': "851721809201",
+    'appId': "1:851721809201:web:aa038ed270e0d8bb86d410",
+    'measurementId': "G-W61PYZL1JM"
 }
+
 firebase = pyrebase.initialize_app(config)
 firebase_auth = firebase.auth()
 db = firebase.database()
@@ -198,16 +200,13 @@ def signup_request(request):
     return render(request, 'project/signin.html', {})
 
 
-def product_details(request, key):
-    print(key)
-    uid = request.session.get('uid')
-    product_data = db.child(uid).child("products").child(key).get().val()
-    product_data = json.loads(json.dumps(product_data))
-    store_uid = product_data.get('uid')
-    store_data = db.child(store_uid).child('user_info').get().val()
+def product_details(request, key, uid):
+    product = db.child(uid).child("products").child(key).get().val()
+    product = json.loads(json.dumps(product))
+    store_data = db.child(uid).child('user_info').get().val()
     store_data = json.loads(json.dumps(store_data))
     return render(request, 'project/product_details.html', {
-        "data": product_data,
+        "data": product,
         "store_name": store_data.get('store_name')
     })
 
@@ -224,8 +223,8 @@ def business_list(request):
             user_long_location
         )
         user_info['distance'] = distance_km
-        send_dict[product.key()] = user_info
-    print(send_dict)
+        if distance_km >= 5:
+            send_dict[product.key()] = user_info
     return render(request, 'project/businessList.html', {"data": send_dict})
 
 
@@ -313,7 +312,7 @@ def add_business_firebase(request):
         "updated_at": updated_at,
     }
     name = db.child(uid).child("user_info").set(data)
-    return redirect('storedetails')
+    return redirect('storedetails/'+uid)
 
 
 def business_map(request):
@@ -341,15 +340,20 @@ def update_info(request):
 
 def store_details(request, key):
     uid = request.session.get('uid')
-    data = db.child(key).get().val()
+    data = db.child(key).child('user_info').get().val()
     output_dict = json.loads(json.dumps(data))
     return render(request, 'project/store_details.html', {
-        "data": output_dict.get('user_info')
+        "data": output_dict
     })
 
 
 def dashboard(request):
-    return render(request, 'project/dashboard.html', {})
+    uid = request.session.get('uid')
+    data = db.child(uid).child('user_info').get().val()
+    output_dict = json.loads(json.dumps(data))
+    return render(request, 'project/store_details.html', {
+        "data": output_dict
+    })
 
 
 def store_products(request):

@@ -22,9 +22,9 @@
 
             <a href="{% url 'mappoint' %}"><i style="margin-right: 10px;" class="fa fa-home" aria-hidden="true"></i>Home</a>
                               <a href="{% url 'dashboard' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Dashboard</a>
-       <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>
-            <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>
-            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Business</a>
+<!--       <a href="{% url 'businesslist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Business</a>-->
+<!--            <a href="{% url 'productlist' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Find Products</a>-->
+<!--            <a href="{% url 'updateinfo' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Business</a>-->
 
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
             <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
@@ -68,15 +68,15 @@
       <div class="card">
         <div class="relative" style="background: #FBFBFB; max-height:29rem; overflow-y: scroll; overflow-x: hidden">
           {% for key, value in data.items %}
-        <a href="{% url 'storedetails' key=0 %}" style="text-decoration: None;">
+        <a href="{% url 'storedetails' key %}" style="text-decoration: None;">
           <div class="business-card">
           <div class="row">
             <div class="col-4">
               <img style="border-radius: 50px; width:85px; height:85px;"
                    src="data:image/png;base64, {{value.img}}">
             </div>
-            <div class="col-8" style="margin-left: -20px;">
-              <div class="card-block" style="margin: 20px 25px;">
+            <div class="col-8" style="">
+              <div class="card-block" style="margin: 20px 5px;">
                 <h6 class="card-title" style="margin:0; color:#4d4d4d;">{{value.store_name}}</h6>
                 <p style="margin:0; color:#247FB3;" class="card-text">{{value.distance}} km away</p>
               </div>
