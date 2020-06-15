@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/project.css' %}">
 
 </head>
+
 <body>
     <div class="content" style="color:black; height:37rem; width: 21rem;">
 
@@ -26,40 +27,44 @@
          <div style="margin: 0px -5px; background:#F2F2F2; max-height:28rem; overflow-y: scroll; overflow-x: hidden">
              <div class="row" style="margin-left:5px; margin-bottom: 20px;">
                  <div class="btn-group" role="group" aria-label="Basic example">
-                  <a onclick="selected('1')" id="selected-1" style="border-bottom: 5px solid #166c4f;border-radius: 5px;margin-left: 10px;margin-right:0px" type="button" class="btn">Step 1<i style="margin-left: 20px;" class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                  <a onclick="selected('1')" id="selected-1" style="margin-left: 10px;margin-right:0px" type="button" class="btn">Step 1<i style="margin-left: 20px;" class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
                   <a onclick="selected('2')" id="selected-2" style="margin-left: 10px;border-radius: 5px;margin-right:0px" type="button" class="btn">Step 2<i style="margin-left: 20px;" class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
-                  <a onclick="selected('3')" style="margin-left: 10px;" type="button" class="btn">Step 3</a>
+                  <a onclick="selected('3')" style="border-bottom: 5px solid #166c4f;border-radius: 5px;margin-left: 10px;" type="button" class="btn">Step 3</a>
             </div>
              </div>
         <form style="padding: 1px 35px;" name="authcheck" method="POST" action="{% url 'addproductfirebase' %}" enctype='multipart/form-data'>
                 {% csrf_token %}
-               <div style="display:None" id="step-2-info">
-                    <div  class="form-group">
-                    <input name="name" class="form-control sign-input" placeholder="Product name" type="text">
-                </div>
-                <div  class="form-group">
-                    <input name="price" class="form-control sign-input" placeholder="Product Price" type="text">
-                </div>
+            <div  class="form-group">
+                    <h5 style="color:#136668">Product added successfully!</h5>
+            </div>
+<!--               <div style="display:None" id="step-2-info">-->
+<!--                    <div  class="form-group">-->
+<!--                    <input name="name" class="form-control sign-input" placeholder="Product name" type="text">-->
+<!--                </div>-->
+<!--                <div  class="form-group">-->
+<!--                    <input name="price" class="form-control sign-input" placeholder="Product Price" type="text">-->
+<!--                </div>-->
 
-                <div class="form-group">
-                    <textarea style="border-radius: 10px;border: 1px solid #dbd9d9;padding: 15px;" id="w3review" name="description" placeholder="Product Description"
-                               rows=5 id="description"></textarea>
-                </div>
-               </div>
+<!--                <div class="form-group">-->
+<!--                    <textarea style="border-radius: 10px;border: 1px solid #dbd9d9;padding: 15px;" id="w3review" name="description" placeholder="Product Description"-->
+<!--                               rows=5 id="description"></textarea>-->
+<!--                </div>-->
+<!--               </div>-->
 
-                <div class="upload-btn-wrapper" style="margin-left: 30px;" id="step-1-info">
-<!--                  <button class="btn-upload">Product Image</button>-->
-<!--                  <input type="file" id="image" name="image" />-->
-                    <input id="image" name="image" type='file' onchange="readURL(this);" />
-                    <img id="blah" width="200px" height="200px" src="{% static 'images/upload.png' %}" alt="your image" />
-                </div>
+<!--                <div class="upload-btn-wrapper" style="margin-left: 30px;" id="step-1-info">-->
+<!--&lt;!&ndash;                  <button class="btn-upload">Product Image</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <input type="file" id="image" name="image" />&ndash;&gt;-->
+<!--                    <input id="image" name="image" type='file' onchange="readURL(this);" />-->
+<!--                    <img id="blah" width="200px" height="200px" src="{% static 'images/upload.png' %}" alt="your image" />-->
+<!--                </div>-->
 
-                <div class="form-group" style="text-align:center; margin-top: 15px;" id="step-1-next">
-                    <a onclick="selected('10')" style="color: white;padding: 10px 80px;border-radius: 11px;"  class="btn btn-block btn-dark"> Next </a>
-                </div>
-                <div class="form-group" style="display:None; text-align:center; margin-top: 15px;" id="step-2-next">
-                    <button onclick="selected('11')" style="color: white;padding: 10px 80px;border-radius: 11px;"  class="btn btn-block btn-dark"> Submit </button>
-                </div>
+<!--                <div class="form-group" style="text-align:center; margin-top: 15px;" id="step-1-next">-->
+<!--                    <a onclick="selected('10')" style="color: white;padding: 10px 80px;border-radius: 11px;"  class="btn btn-block btn-dark"> Next </a>-->
+<!--                </div>-->
+<!--                <div class="form-group" style="display:None; text-align:center; margin-top: 15px;" id="step-2-next">-->
+<!--                    <button onclick="selected('11')" style="color: white;padding: 10px 80px;border-radius: 11px;"  class="btn btn-block btn-dark"> Submit </button>-->
+<!--                </div>-->
+
                 <p style="text-align:center; color:red;">
                     {% if message %}
                     {{ message }}

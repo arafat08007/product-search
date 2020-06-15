@@ -260,8 +260,13 @@ def add_product_firebase(request):
         "updated_at": updated_at,
     }
     product_firebase = db.child(uid).child("products").push(product)
-    print(product_firebase)
+    if product_firebase:
+        return redirect('submitproduct')
     return redirect('addproduct')
+
+
+def submitproduct(request):
+    return render(request, 'project/submitproduct.html', {})
 
 
 def add_business_firebase(request):

@@ -22,4 +22,5 @@ urlpatterns = [
     path('storeproducts', views.store_products, name='storeproducts'),
     path('change_password', views.change_password, name='change_password'),
     path('addbusinessfirebase', views.add_business_firebase, name='addbusinessfirebase'),
+    path('submitproduct', views.submitproduct, name='submitproduct'),
 ]
