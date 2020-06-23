@@ -231,17 +231,21 @@ def product_details(request, key, uid):
 def business_list(request):
     send_dict = {}
     all_users = db.child().get()
+    print(all_users)
     for product in all_users.each():
-        user_info = product.val().get('user_info')
-        distance_km = distance(
-            float(product.val().get('user_info').get('lat')),
-            float(product.val().get('user_info').get('long')),
-            user_lat_location,
-            user_long_location
-        )
-        user_info['distance'] = distance_km
-        if distance_km >= 5:
-            send_dict[product.key()] = user_info
+        try:
+            user_info = product.val().get('user_info')
+            distance_km = distance(
+                float(product.val().get('user_info').get('lat')),
+                float(product.val().get('user_info').get('long')),
+                user_lat_location,
+                user_long_location
+            )
+            user_info['distance'] = distance_km
+            if distance_km >= 5:
+                send_dict[product.key()] = user_info
+        except:
+            pass
     return render(request, 'project/businessList.html', {"data": send_dict})
 
 
