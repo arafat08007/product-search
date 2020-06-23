@@ -19,16 +19,12 @@
                 <span onclick="goBack()"><i style="margin-bottom: 5px; padding: 5px 0px 0px 10px; font-size: 25px; font-weight: bold;" class="fa fa-angle-left" aria-hidden="true"></i></span>
       <div style="color:black; max-height:34rem; overflow-y: scroll; overflow-x: hidden">
          <div style="padding:0 10px">
-             <div style="transform: none; position: fixed; left: 19%;top: 93%;" class="btn-group capsule-button" role="group" aria-label="Basic example">
-                <a href="{% url 'updateinfo' %}"
-                    style="color:white;line-height: 0.5; padding:10px 25px; border-radius: 25px 0px 0px 25px; box-shadow: 0px 0px 4px 1px #aaa;"
-                    type="button" class="btn btn-primary btn-sm ">
-                    Edit Info
+             <div style="transform: none; position: fixed; left: 6%;top: 93%;" class="btn-group capsule-button" role="group" aria-label="Basic example">
+                <a href="{% url 'addproduct' %}"
+                    style="color:white;line-height: 0.5; padding:13px 95px 12px 100px; box-shadow: 0px 0px 4px 1px #aaa;"
+                    type="button" class="btn btn-success btn-sm ">
+                    ADD PRODUCT
                 </a>
-                <a href="{% url 'storeproducts' %}"
-                    style="line-height: 0.5;padding:10px 10px;border-radius: 0px 25px 25px 0px; box-shadow: 0px 0px 4px 1px #aaa;"
-                    type="button" class="btn btn-sm"><span style="color:black; text-decoration: None;"
-                        >View Products</span></a>
             </div>
 
 
@@ -72,6 +68,7 @@
       </div>
       </div>
         </div>
+
     </div>
 </div>
   <!-- jQuery library -->

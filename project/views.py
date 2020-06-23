@@ -1,6 +1,7 @@
 from math import acos, sin, cos
 from django.core.files.images import ImageFile
 from algoliasearch.search_client import SearchClient
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from google.auth.transport import requests
 import math
@@ -201,11 +202,27 @@ def signup_request(request):
 
 
 def product_details(request, key, uid):
+
     product = db.child(uid).child("products").child(key).get().val()
     product = json.loads(json.dumps(product))
     store_data = db.child(uid).child('user_info').get().val()
     store_data = json.loads(json.dumps(store_data))
+
+    data = db.child("user_confirmation").child(key).get().val()
+    output_dict = json.loads(json.dumps(data))
+    like_counter = 0
+    dislike_counter = 0
+    if output_dict is not None:
+        for k, value in output_dict.items():
+            if value.get('val') == 1:
+                like_counter += 1
+            elif value.get('val') == 0:
+                dislike_counter += 1
+    print('key here', key)
     return render(request, 'project/product_details.html', {
+        "like": like_counter,
+        'dislike': dislike_counter,
+        "p_id": str(key),
         "data": product,
         "store_name": store_data.get('store_name')
     })
@@ -356,7 +373,7 @@ def dashboard(request):
     uid = request.session.get('uid')
     data = db.child(uid).child('user_info').get().val()
     output_dict = json.loads(json.dumps(data))
-    return render(request, 'project/store_details.html', {
+    return render(request, 'project/dashboard.html', {
         "data": output_dict
     })
 
@@ -374,3 +391,31 @@ def store_products(request):
 
 def change_password(request):
     return render(request, 'project/change_password.html', {})
+
+
+def user_confirmation(request):
+    product_id = request.GET['product_id']
+    val = int(request.GET['val'])
+    uid = request.session.get('uid')
+    print(product_id, val, uid)
+    data = db.child("user_confirmation").child(product_id).child(uid).get().val()
+    if data is None:
+        db.child("user_confirmation").child(product_id).child(uid).set({'val': val})
+    elif data is not None and data != val:
+        print('updated')
+        # db.child("user_confirmation").child(product_id).child(uid).remove()
+        db.child("user_confirmation").child(product_id).child(uid).update({'val': val})
+
+    data = db.child("user_confirmation").child(product_id).get().val()
+    output_dict = json.loads(json.dumps(data))
+    like_counter = 0
+    dislike_counter = 0
+    print(output_dict)
+    for key, value in output_dict.items():
+        if value.get('val') == 1:
+            like_counter += 1
+        elif value.get('val') == 0:
+            dislike_counter += 1
+
+    print(like_counter, dislike_counter)
+    return HttpResponse(str(like_counter) + '-' + str(dislike_counter))
