@@ -286,7 +286,7 @@ def business_list(request):
                 float(user_long_location)
             )
             user_info['distance'] = distance_km
-            if distance_km >= 5:
+            if distance_km >= 0:
                 send_dict[product.key()] = user_info
         except:
             pass
