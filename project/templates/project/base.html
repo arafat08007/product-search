@@ -69,7 +69,7 @@
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyBb8naJyiLvTPtVyU4MrYeUxPtEH7aaXjU"></script>
+    src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyAerjK8i2DqIfwGOxkudas-zUzSnqmeTI0"></script>
   <script type="text/javascript">
   var value = {{ search_result }}
 
@@ -83,8 +83,9 @@
             var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             var latitude_list = {{ lat_location_list }};
             var longitude_list = {{ long_location_list }};
+            console.log(latitude_list);
             var map_key = {{ map_key }}
-            if ( map_key == 1 ) {
+            if ( map_key == 0 ) {
             for (i = 0; i < latitude_list.length; i++) {
                 var markar = new google.maps.Marker({
                     position: new google.maps.LatLng(latitude_list[i], longitude_list[i]),

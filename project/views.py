@@ -75,11 +75,35 @@ def map_point(request):
     #            'cornflowerblue', edge_width=2.5)
 
     # gmap.draw('/home/arnab/Documents/pakiza/map/project/templates/project/map_plot.html')
+    lat_list = []
+    long_list = []
+    all_users = db.child().get()
+    for product in all_users.each():
+        try:
+            lat = float(product.val().get('user_info').get('lat'))
+            long = float(product.val().get('user_info').get('long'))
+            distance_km = distance(
+                lat,
+                long,
+                user_lat_location,
+                user_long_location
+            )
+            if distance_km >= 5:
+                lat_list.append(lat)
+                long_list.append(long)
+        except:
+            pass
+
+    print(lat_list)
+    print(long_list)
+    print(lat_location_list)
+    print(long_location_list)
+    search_result = len(lat_list)
     return render(request, 'project/base.html', {
-        'user_lat_location': user_lat_location,
-        'user_long_location': user_long_location,
-        'lat_location_list': lat_location_list,
-        'long_location_list': long_location_list,
+        'user_lat_location': lat_list[2],
+        'user_long_location': long_list[2],
+        'lat_location_list': lat_list,
+        'long_location_list': long_list,
         'search_result': search_result,
         'map_key': 0
     })
@@ -231,7 +255,6 @@ def product_details(request, key, uid):
 def business_list(request):
     send_dict = {}
     all_users = db.child().get()
-    print(all_users)
     for product in all_users.each():
         try:
             user_info = product.val().get('user_info')
