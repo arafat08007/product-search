@@ -236,6 +236,7 @@ var store_address_list = store_address.split("+");
     };
     var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
     var count_total = lat_array.length;
+
     for (i = 0; i < count_total; i++) {
         (function(){
         var myLatlng = new google.maps.LatLng(lat_array[i], lon_array[i]);
@@ -277,7 +278,7 @@ var store_address_list = store_address.split("+");
             });
 
           google.maps.event.addListener(marker, 'click', function()
-                                        {
+                {
             infowindow.open(map,marker);
           });
 

@@ -1,4 +1,6 @@
 from math import acos, sin, cos
+import random
+
 from django.core.files.images import ImageFile
 from algoliasearch.search_client import SearchClient
 from django.http import HttpResponse
@@ -63,6 +65,7 @@ def map_point(request):
     all_users = db.child().get()
     if request.method == 'POST':
         search_string = request.POST.get('search', '').lower()
+        print(search_string)
         for product in all_users.each():
             try:
                 name = product.val().get('user_info').get('store_name')
@@ -73,12 +76,14 @@ def map_point(request):
                 if u_product:
                     for key, value in u_product.items():
                         product_name = value.get('product_name').lower()
-                        product_name = product_name.split(' ')
+                        ran = random.randint(0, 9) / 90000
+                        if random.randint(0, 1) == 0:
+                            lat = lat + ran
+                        else:
+                            long = long + ran
                         flag = False
-                        for item in product_name:
-                            if item == search_string:
-                                flag = True
-                                break
+                        if search_string.strip() in product_name:
+                            flag = True
                         if not flag:
                             continue
                         product_names = product_names + value.get('product_name') + '+'
@@ -88,12 +93,12 @@ def map_point(request):
                             user_lat_location,
                             user_long_location
                         )
-                        if distance_km >= 0:
-                            lat_list.append(lat)
-                            long_list.append(long)
-                            store_name = store_name + name + '+'
-                            store_address = store_address + address + '+'
+                        lat_list.append(lat)
+                        long_list.append(long)
+                        store_name = store_name + name + '+'
+                        store_address = store_address + address + '+'
             except:
+                print('error')
                 pass
         print(lat_list)
         return render(request, 'project/base.html', {
@@ -117,6 +122,11 @@ def map_point(request):
             if u_product:
                 for key, value in u_product.items():
                     product_names = product_names + value.get('product_name') + '+'
+                    ran = random.randint(0, 9) / 90000
+                    if random.randint(0, 1) == 0:
+                        lat = lat + ran
+                    else:
+                        long = long + ran
                     distance_km = distance(
                         lat,
                         long,
@@ -128,7 +138,6 @@ def map_point(request):
                         long_list.append(long)
                         store_name = store_name + name + '+'
                         store_address = store_address + address + '+'
-                    break
         except:
             pass
 
