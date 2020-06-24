@@ -31,12 +31,13 @@
 <!--        <button class="openbtn" onclick="openNav()">☰</button>-->
 <!--      </div>-->
 
-  <form>
+  <form method="post" action="{% url 'productlist' %}">
+      {% csrf_token %}
             <div class="input-group mb-3 white-nav">
             <div class="input-group-prepend">
                 <span class="input-group-text custom-input-group-text" onclick="openNav()" id="basic-addon1">☰</span>
             </div>
-            <input type="text" class="form-control custom-form-control" placeholder="Search" aria-label="Search"
+            <input name="search" type="text" class="form-control custom-form-control" placeholder="Search" aria-label="Search"
                 aria-describedby="basic-addon1">
             <div class="input-group-prepend">
                 <button type="submit" class="input-group-text custom-input-group-text"  ><i class="fa fa-search" aria-hidden="true"></i></button>

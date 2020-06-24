@@ -65,7 +65,8 @@ def map_point(request):
     all_users = db.child().get()
     if request.method == 'POST':
         search_string = request.POST.get('search', '').lower()
-        print(search_string)
+        search_string = search_string.strip()
+        search_string = search_string.split(' ')
         for product in all_users.each():
             try:
                 name = product.val().get('user_info').get('store_name')
@@ -76,16 +77,18 @@ def map_point(request):
                 if u_product:
                     for key, value in u_product.items():
                         product_name = value.get('product_name').lower()
+                        product_name_split = product_name.split(' ')
                         ran = random.randint(0, 9) / 90000
                         if random.randint(0, 1) == 0:
                             lat = lat + ran
                         else:
                             long = long + ran
                         flag = False
-                        if search_string.strip() in product_name:
+                        if set(search_string) & set(product_name_split):
                             flag = True
                         if not flag:
-                            continue
+                            if search_string[0] != '':
+                                continue
                         product_names = product_names + value.get('product_name') + '+'
                         distance_km = distance(
                             lat,
@@ -181,6 +184,30 @@ def map_with_key(request):
 def listProduct(request):
     send_dict = {}
     all_products = db.child().get()
+    if request.method == 'POST':
+        search_string = request.POST.get('search', '').lower()
+        search_string = search_string.strip()
+        search_string = search_string.split(' ')
+        for product in all_products.each():
+            try:
+                u_product = product.val().get('products')
+                if u_product:
+                    for key, value in u_product.items():
+                        product_name = value.get('product_name').lower()
+                        product_name = product_name.strip()
+                        product_name = product_name.split(' ')
+                        flag = False
+                        if set(product_name) & set(search_string):
+                            flag = True
+                        if not flag:
+                            if search_string[0] != '':
+                                continue
+                        send_dict[key] = value
+            except:
+                print('error')
+                pass
+        return render(request, 'project/productListView.html', {"data": send_dict})
+
     for product in all_products.each():
         u_product = product.val().get('products')
         if u_product:
@@ -285,6 +312,35 @@ def product_details(request, key, uid):
 def business_list(request):
     send_dict = {}
     all_users = db.child().get()
+    if request.method == 'POST':
+        search_string = request.POST.get('search', '').lower()
+        search_string = search_string.split(' ')
+        print(search_string)
+        for product in all_users.each():
+            try:
+                user_info = product.val().get('user_info')
+                name = product.val().get('user_info').get('store_name')
+                lower_name = name.lower()
+                name_split = lower_name.split(' ')
+                flag = False
+                if set(search_string) & set(name_split):
+                    flag = True
+                if not flag:
+                    if search_string[0] != '':
+                        continue
+                distance_km = distance(
+                    float(product.val().get('user_info').get('lat')),
+                    float(product.val().get('user_info').get('long')),
+                    float(user_lat_location),
+                    float(user_long_location)
+                )
+                user_info['distance'] = distance_km
+                if distance_km >= 0:
+                    send_dict[product.key()] = user_info
+            except:
+                pass
+        return render(request, 'project/businessList.html', {"data": send_dict})
+
     for product in all_users.each():
         try:
             user_info = product.val().get('user_info')
@@ -402,18 +458,19 @@ def business_map(request):
     all_users = db.child().get()
     if request.method == 'POST':
         search_string = request.POST.get('search', '').lower()
+        search_string = search_string.strip()
+        search_string = search_string.split(' ')
         for product in all_users.each():
             try:
                 name = product.val().get('user_info').get('store_name')
                 lower_name = name.lower()
                 name_split = lower_name.split(' ')
                 flag = False
-                for item in name_split:
-                    if item == search_string:
-                        flag = True
-                        break
+                if set(search_string) & set(name_split):
+                    flag = True
                 if not flag:
-                    continue
+                    if search_string[0] != '':
+                        continue
                 lat = float(product.val().get('user_info').get('lat'))
                 long = float(product.val().get('user_info').get('long'))
                 address = product.val().get('user_info').get('address')
