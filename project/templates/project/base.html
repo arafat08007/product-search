@@ -26,15 +26,16 @@
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
             <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
-        <form>
+        <form method="post" action="{% url 'mappoint' %}">
+            {% csrf_token %}
             <div class="input-group mb-3 white-nav">
             <div class="input-group-prepend">
                 <span class="input-group-text custom-input-group-text" onclick="openNav()" id="basic-addon1">☰</span>
             </div>
-            <input type="text" class="form-control custom-form-control" placeholder="Search" aria-label="Search"
+            <input name="search" type="text" class="form-control custom-form-control" placeholder="Search Products" aria-label="Search"
                 aria-describedby="basic-addon1">
             <div class="input-group-prepend">
-                <button type="submit" class="input-group-text custom-input-group-text"  ><i class="fa fa-search" aria-hidden="true"></i></button>
+                <button style="cursor: pointer;" type="submit" class="input-group-text custom-input-group-text"  ><i class="fa fa-search" aria-hidden="true"></i></button>
             </div>
         </div>
         </form>
@@ -71,7 +72,7 @@
   <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyAerjK8i2DqIfwGOxkudas-zUzSnqmeTI0"></script>
   <script type="text/javascript">
-var value = {{ search_result }}
+
 var map;
 var lat_array = {{ lat_location_list }};
 var lon_array = {{ long_location_list }};
@@ -243,7 +244,7 @@ var store_address_list = store_address.split("+");
         var marker = new google.maps.Marker({
             position: myLatlng,
             map: map,
-            title: store_name_list[i],
+            title: product_name_list[i],
             tooltip: '<B>This is a customized tooltip</B>'
         });
         var contentString = '<div id="content">'+

@@ -27,12 +27,13 @@
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
             <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
-        <form>
+        <form method="post" action="{% url 'businessmap' %}">
+            {% csrf_token %}
             <div class="input-group mb-3 white-nav">
             <div class="input-group-prepend">
                 <span class="input-group-text custom-input-group-text" onclick="openNav()" id="basic-addon1">☰</span>
             </div>
-            <input type="text" class="form-control custom-form-control" placeholder="Search" aria-label="Search"
+            <input name="search" type="text" class="form-control custom-form-control" placeholder="Search Store" aria-label="Search"
                 aria-describedby="basic-addon1">
             <div class="input-group-prepend">
                 <button type="submit" class="input-group-text custom-input-group-text"  ><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -58,7 +59,6 @@
             </div>
             <div style="top: 95%;"><a class="find_busniess" style="text-decoration: none;color:#4d4d4d;" href="{% url 'productlist' %}">Find Products</a></div>
         </div>
-
     </div>
 </div>
 
@@ -74,7 +74,6 @@
     src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyAerjK8i2DqIfwGOxkudas-zUzSnqmeTI0"></script>
   <script type="text/javascript">
 
-var value = {{ search_result }}
 var map;
 var lat_array = {{ lat_location_list }};
 var lon_array = {{ long_location_list }};
@@ -116,7 +115,7 @@ var store_address_list = store_address.split("+");
                 var div = this.div_;
 
                 // Adjust the tooltip's position
-                var gap = 5;
+                var gap = 1;
                 var posX = pixel.x + gap;
                 var posY = pixel.y + gap;
 
@@ -146,7 +145,7 @@ var store_address_list = store_address.split("+");
                 var div = this.div_;
 
                 // Adjust the tooltip's position
-                var gap = 5;
+                var gap = 1;
                 var posX = pixel.x + gap;
                 var posY = pixel.y + gap;
 
@@ -229,7 +228,7 @@ var store_address_list = store_address.split("+");
     var bounds = new google.maps.LatLngBounds();
     var centerlatlng = new google.maps.LatLng({{ user_lat_location}}, {{ user_long_location }});
     var myOptions = {
-        zoom: 15,
+        zoom: 35,
         center: centerlatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };

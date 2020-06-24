@@ -20,8 +20,8 @@ import json
 
 API_KEY = "AIzaSyBhoFFaf8hZHabaiTJjG2VXPz907Em-26Q"
 user_location = geocoder.ip('me').latlng
-user_lat_location = user_location[0]
-user_long_location = user_location[1]
+user_lat_location = -33.864736
+user_long_location = 151.2043333
 lat_max_range = user_lat_location + 0.008983 * 5
 lat_min_range = user_lat_location - 0.008983 * 5
 
@@ -55,21 +55,58 @@ def distance(lat1, lon1, lat2, lon2):
 
 
 def map_point(request):
-    query_set = MapPoint.objects.filter(lat__range=(lat_min_range, lat_max_range)).values_list('lat', 'long')
-    avaialble_location = list(query_set)
-    search_result = len(avaialble_location)
-    lat_location_list = []
-    long_location_list = []
-    for item in avaialble_location:
-        lat_location_list.append(item[0])
-        long_location_list.append(item[1])
-
     lat_list = []
     long_list = []
     store_name = ''
     store_address = ''
     product_names = ''
     all_users = db.child().get()
+    if request.method == 'POST':
+        search_string = request.POST.get('search', '').lower()
+        for product in all_users.each():
+            try:
+                name = product.val().get('user_info').get('store_name')
+                lat = float(product.val().get('user_info').get('lat'))
+                long = float(product.val().get('user_info').get('long'))
+                address = product.val().get('user_info').get('address')
+                u_product = product.val().get('products')
+                if u_product:
+                    for key, value in u_product.items():
+                        product_name = value.get('product_name').lower()
+                        product_name = product_name.split(' ')
+                        flag = False
+                        for item in product_name:
+                            if item == search_string:
+                                flag = True
+                                break
+                        if not flag:
+                            continue
+                        product_names = product_names + value.get('product_name') + '+'
+                        distance_km = distance(
+                            lat,
+                            long,
+                            user_lat_location,
+                            user_long_location
+                        )
+                        if distance_km >= 0:
+                            lat_list.append(lat)
+                            long_list.append(long)
+                            store_name = store_name + name + '+'
+                            store_address = store_address + address + '+'
+            except:
+                pass
+        print(lat_list)
+        return render(request, 'project/base.html', {
+            'user_lat_location': user_lat_location,
+            'user_long_location': user_long_location,
+            'lat_location_list': lat_list,
+            'long_location_list': long_list,
+            'store_name': store_name,
+            'store_address': store_address,
+            'product_names': product_names,
+            'map_key': 0
+        })
+
     for product in all_users.each():
         try:
             lat = float(product.val().get('user_info').get('lat'))
@@ -94,12 +131,13 @@ def map_point(request):
                     break
         except:
             pass
+
     search_result = len(lat_list)
     print(product_names)
     print(lat_list)
     return render(request, 'project/base.html', {
-        'user_lat_location': lat_list[1],
-        'user_long_location': long_list[1],
+        'user_lat_location': user_lat_location,
+        'user_long_location': user_long_location,
         'lat_location_list': lat_list,
         'long_location_list': long_list,
         'store_name': store_name,
@@ -186,16 +224,10 @@ def signup_request(request):
     email = request.POST.get('email', '')
     password = request.POST.get('password', '')
     confirm_password = request.POST.get('confirm_password', '')
-    # status = request.POST.get('status', '')
 
     if not re.search(regex, email):
         message = "Invalid email"
         return render(request, 'project/signup.html', {"message": message})
-
-    # if status == '1':
-    #     if store_name is "":
-    #         message = "Enter store name"
-    #         return render(request, 'project/signup.html', {"message": message})
 
     if len(password) < 6:
         message = "Password should be at least 6 characters"
@@ -212,22 +244,10 @@ def signup_request(request):
         message = "Email exists"
         return render(request, 'project/signup.html', {"message": message})
 
-    # uid = user['localId']
-
-    # if status == "1":
-    #     print(status, store_name)
-    #     data = {
-    #         "store_name": store_name,
-    #         "lat": user_lat_location,
-    #         "long": user_long_location,
-    #         "status": "business_user"
-    #     }
-    #     db.child(uid).child("user_info").set(data)
     return render(request, 'project/signin.html', {})
 
 
 def product_details(request, key, uid):
-
     product = db.child(uid).child("products").child(key).get().val()
     product = json.loads(json.dumps(product))
     store_data = db.child(uid).child('user_info').get().val()
@@ -262,8 +282,8 @@ def business_list(request):
             distance_km = distance(
                 float(product.val().get('user_info').get('lat')),
                 float(product.val().get('user_info').get('long')),
-                user_lat_location,
-                user_long_location
+                float(user_lat_location),
+                float(user_long_location)
             )
             user_info['distance'] = distance_km
             if distance_km >= 5:
@@ -371,6 +391,46 @@ def business_map(request):
     store_name = ''
     store_address = ''
     all_users = db.child().get()
+    if request.method == 'POST':
+        search_string = request.POST.get('search', '').lower()
+        for product in all_users.each():
+            try:
+                name = product.val().get('user_info').get('store_name')
+                lower_name = name.lower()
+                name_split = lower_name.split(' ')
+                flag = False
+                for item in name_split:
+                    if item == search_string:
+                        flag = True
+                        break
+                if not flag:
+                    continue
+                lat = float(product.val().get('user_info').get('lat'))
+                long = float(product.val().get('user_info').get('long'))
+                address = product.val().get('user_info').get('address')
+                distance_km = distance(
+                    lat,
+                    long,
+                    float(user_lat_location),
+                    float(user_long_location)
+                )
+                if distance_km >= 0:
+                    lat_list.append(lat)
+                    long_list.append(long)
+                    store_name = store_name + name + '+'
+                    store_address = store_address + address + '+'
+            except:
+                print('error')
+                pass
+        return render(request, 'project/businessMap.html', {
+            'user_lat_location': user_lat_location,
+            'user_long_location': user_long_location,
+            'lat_location_list': lat_list,
+            'long_location_list': long_list,
+            'store_name': store_name,
+            'store_address': store_address,
+            'map_key': 1
+        })
     for product in all_users.each():
         try:
             lat = float(product.val().get('user_info').get('lat'))
