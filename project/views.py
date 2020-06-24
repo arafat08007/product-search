@@ -93,11 +93,6 @@ def map_point(request):
                 long_list.append(long)
         except:
             pass
-
-    print(lat_list)
-    print(long_list)
-    print(lat_location_list)
-    print(long_location_list)
     search_result = len(lat_list)
     return render(request, 'project/base.html', {
         'user_lat_location': lat_list[2],
@@ -365,22 +360,34 @@ def add_business_firebase(request):
 
 
 def business_map(request):
-    query_set = MapPoint.objects.filter(lat__range=(lat_min_range, lat_max_range)).values_list('lat', 'long')
-    avaialble_location = list(query_set)
-    search_result = len(avaialble_location)
-    lat_location_list = []
-    long_location_list = []
-    for item in avaialble_location:
-        lat_location_list.append(item[0])
-        long_location_list.append(item[1])
+    lat_list = []
+    long_list = []
+    all_users = db.child().get()
+    for product in all_users.each():
+        try:
+            lat = float(product.val().get('user_info').get('lat'))
+            long = float(product.val().get('user_info').get('long'))
+            distance_km = distance(
+                lat,
+                long,
+                user_lat_location,
+                user_long_location
+            )
+            if distance_km >= 5:
+                lat_list.append(lat)
+                long_list.append(long)
+        except:
+            pass
+    search_result = len(lat_list)
     return render(request, 'project/businessMap.html', {
-        'user_lat_location': user_lat_location,
-        'user_long_location': user_long_location,
-        'lat_location_list': lat_location_list,
-        'long_location_list': long_location_list,
+        'user_lat_location': lat_list[1],
+        'user_long_location': long_list[1],
+        'lat_location_list': lat_list,
+        'long_location_list': long_list,
         'search_result': search_result,
-        'map_key': 0
+        'map_key': 1
     })
+
 
 
 def update_info(request):
