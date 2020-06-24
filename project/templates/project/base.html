@@ -84,29 +84,33 @@
             var latitude_list = {{ lat_location_list }};
             var longitude_list = {{ long_location_list }};
             console.log(latitude_list);
-            var map_key = {{ map_key }}
+            var map_key = {{ map_key }};
+            var product_names = '{{ product_names }}';
+            var product_names_list = product_names.split("+");
+            console.log(product_names_list);
             if ( map_key == 0 ) {
             for (i = 0; i < latitude_list.length; i++) {
                 var markar = new google.maps.Marker({
                     position: new google.maps.LatLng(latitude_list[i], longitude_list[i]),
+                    title: product_names_list[i],
                     map: map
                 });
             }
             }
         }
         function openNav() {
-  document.getElementById("mySidebar").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
-    function openNav() {
-      document.getElementById("mySidebar").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
+          document.getElementById("mySidebar").style.width = "250px";
+          document.getElementById("main").style.marginLeft = "250px";
+        }
+        function openNav() {
+          document.getElementById("mySidebar").style.width = "250px";
+          document.getElementById("main").style.marginLeft = "250px";
+        }
 
-    function closeNav() {
-      document.getElementById("mySidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft = "0";
-    }
+        function closeNav() {
+          document.getElementById("mySidebar").style.width = "0";
+          document.getElementById("main").style.marginLeft = "0";
+        }
   </script>
 </body>
 

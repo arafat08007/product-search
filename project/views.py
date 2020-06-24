@@ -63,42 +63,40 @@ def map_point(request):
     for item in avaialble_location:
         lat_location_list.append(item[0])
         long_location_list.append(item[1])
-    # gmap = gmplot.GoogleMapPlotter(user_lat_location, user_long_location, 13, apikey=)
-    # scatter method of map object
-    # scatter points on the google map
-    # gmap.scatter(latitude_list, longitude_list, '# FF0000',
-    #               size=40, marker=False)
 
-    # Plot method Draw a line in
-    # between given coordinates
-    # gmap3.plot(latitude_list, longitude_list,
-    #            'cornflowerblue', edge_width=2.5)
-
-    # gmap.draw('/home/arnab/Documents/pakiza/map/project/templates/project/map_plot.html')
     lat_list = []
     long_list = []
+    product_names = ''
     all_users = db.child().get()
     for product in all_users.each():
         try:
             lat = float(product.val().get('user_info').get('lat'))
             long = float(product.val().get('user_info').get('long'))
-            distance_km = distance(
-                lat,
-                long,
-                user_lat_location,
-                user_long_location
-            )
-            if distance_km >= 5:
-                lat_list.append(lat)
-                long_list.append(long)
+            u_product = product.val().get('products')
+            if u_product:
+                for key, value in u_product.items():
+                    product_names = product_names + value.get('product_name') + '+'
+                    distance_km = distance(
+                        lat,
+                        long,
+                        user_lat_location,
+                        user_long_location
+                    )
+                    if distance_km >= 5:
+                        lat_list.append(lat)
+                        long_list.append(long)
+                    break
         except:
             pass
     search_result = len(lat_list)
+    print(product_names)
+    print(lat_list)
     return render(request, 'project/base.html', {
-        'user_lat_location': lat_list[2],
-        'user_long_location': long_list[2],
+        'user_lat_location': lat_list[1],
+        'user_long_location': long_list[1],
         'lat_location_list': lat_list,
         'long_location_list': long_list,
+        'product_names': product_names,
         'search_result': search_result,
         'map_key': 0
     })
@@ -362,11 +360,15 @@ def add_business_firebase(request):
 def business_map(request):
     lat_list = []
     long_list = []
+    store_name = ''
+    store_address = ''
     all_users = db.child().get()
     for product in all_users.each():
         try:
             lat = float(product.val().get('user_info').get('lat'))
             long = float(product.val().get('user_info').get('long'))
+            name = product.val().get('user_info').get('store_name')
+            address = product.val().get('user_info').get('address')
             distance_km = distance(
                 lat,
                 long,
@@ -376,7 +378,10 @@ def business_map(request):
             if distance_km >= 5:
                 lat_list.append(lat)
                 long_list.append(long)
+                store_name = store_name + name + '+'
+                store_address = store_address + address + '+'
         except:
+            print('error')
             pass
     search_result = len(lat_list)
     return render(request, 'project/businessMap.html', {
@@ -384,10 +389,11 @@ def business_map(request):
         'user_long_location': long_list[1],
         'lat_location_list': lat_list,
         'long_location_list': long_list,
+        'store_name': store_name,
+        'store_address': store_address,
         'search_result': search_result,
         'map_key': 1
     })
-
 
 
 def update_info(request):

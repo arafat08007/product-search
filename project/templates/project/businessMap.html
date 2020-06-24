@@ -78,21 +78,34 @@
         function initialize() {
             var centerlatlng = new google.maps.LatLng({{ user_lat_location}}, {{ user_long_location }});
             var myOptions = {
-                zoom: 13,
+                zoom: 15,
                 center: centerlatlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             var latitude_list = {{ lat_location_list }};
             var longitude_list = {{ long_location_list }};
-            var map_key = {{ map_key }}
+            var store_name = '{{ store_name }}';
+            var store_address = '{{ store_address }}';
+            var store_name_list = store_name.split("+");
+            var store_address_list = store_address.split("+");
+            console.log(store_address_list);
+            var map_key = {{ map_key }};
+<!--            var infowindow = new google.maps.InfoWindow({-->
+<!--                content: "<span>Store Information will go here</span>"-->
+<!--            });-->
             if ( map_key == 1 ) {
             for (i = 0; i < latitude_list.length; i++) {
-                var markar = new google.maps.Marker({
+                marker = new google.maps.Marker({
                     position: new google.maps.LatLng(latitude_list[i], longitude_list[i]),
+                    title: 'Store Name: ' + store_name_list[i] + ' Store Address: ' + store_address_list[i],
                     map: map
-                });
-            }
+                    });
+<!--                    google.maps.event.addListener(marker, 'click', function() {-->
+<!--                      infowindow.open(map,marker);-->
+<!--                    });-->
+                }
+
             }
         }
         function openNav() {
