@@ -66,12 +66,16 @@ def map_point(request):
 
     lat_list = []
     long_list = []
+    store_name = ''
+    store_address = ''
     product_names = ''
     all_users = db.child().get()
     for product in all_users.each():
         try:
             lat = float(product.val().get('user_info').get('lat'))
             long = float(product.val().get('user_info').get('long'))
+            name = product.val().get('user_info').get('store_name')
+            address = product.val().get('user_info').get('address')
             u_product = product.val().get('products')
             if u_product:
                 for key, value in u_product.items():
@@ -82,9 +86,11 @@ def map_point(request):
                         user_lat_location,
                         user_long_location
                     )
-                    if distance_km >= 5:
+                    if distance_km >= 0:
                         lat_list.append(lat)
                         long_list.append(long)
+                        store_name = store_name + name + '+'
+                        store_address = store_address + address + '+'
                     break
         except:
             pass
@@ -96,6 +102,8 @@ def map_point(request):
         'user_long_location': long_list[1],
         'lat_location_list': lat_list,
         'long_location_list': long_list,
+        'store_name': store_name,
+        'store_address': store_address,
         'product_names': product_names,
         'search_result': search_result,
         'map_key': 0
@@ -103,7 +111,7 @@ def map_point(request):
 
 
 def map_with_key(request):
-    key = request.POST.get('search','')
+    key = request.POST.get('search', '')
     query_set = MapPoint.objects.filter(product=key, lat__range=(lat_min_range, lat_max_range)).values_list('lat', 'long')
     avaialble_location = list(query_set)
     print(avaialble_location)
@@ -375,7 +383,7 @@ def business_map(request):
                 user_lat_location,
                 user_long_location
             )
-            if distance_km >= 5:
+            if distance_km >= 0:
                 lat_list.append(lat)
                 long_list.append(long)
                 store_name = store_name + name + '+'
