@@ -73,10 +73,9 @@
   <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyAerjK8i2DqIfwGOxkudas-zUzSnqmeTI0"></script>
   <script type="text/javascript">
-  $(function() {
-    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    $("html, body").css({"width":w,"height":h});
+  $(document).ready(function() {
+    var windowHeight = $(window).innerHeight();
+    $('body').css({'height':windowHeight});
 });
 
 var map;
