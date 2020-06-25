@@ -3,7 +3,10 @@
 <html>
 
 <head>
-  <meta name="viewport" content="minimum-scale=1">
+  <meta name="viewport" content="height=device-height,
+                      width=device-width, initial-scale=1.0,
+                      minimum-scale=1.0, maximum-scale=1.0,
+                      user-scalable=no, target-densitydpi=device-dpi">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <title>Google Maps - pygmaps </title>
   <!-- Latest compiled and minified CSS -->
@@ -26,7 +29,7 @@
             <a href="{% url 'addproduct' %}"><i style="margin-right: 10px;" class="fa fa-angle-double-right" aria-hidden="true"></i>Add Product</a>
             <a href="{% url 'logout' %}"><i style="margin-right: 10px;" class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
         </div>
-        <form method="post" action="{% url 'mappoint' %}">
+        <form method="post" action="{% url 'mappoint' %}" style="position:sticky; top:0">
             {% csrf_token %}
             <div class="input-group mb-3 white-nav">
             <div class="input-group-prepend">
