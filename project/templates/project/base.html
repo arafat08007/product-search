@@ -13,7 +13,7 @@
 </head>
 
 <body onload="initialize()">
-  <div class="container-fluid">
+  <div>
       <div class="content" style="height:36.5rem">
     <div class="card" style="width: 20rem;">
         <div id="mySidebar" class="sidebar">
@@ -73,6 +73,11 @@
   <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true_or_false&key=AIzaSyAerjK8i2DqIfwGOxkudas-zUzSnqmeTI0"></script>
   <script type="text/javascript">
+  $(function() {
+    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    $("html, body").css({"width":w,"height":h});
+});
 
 var map;
 var lat_array = {{ lat_location_list }};
